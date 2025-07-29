@@ -10,7 +10,7 @@ import * as fs from 'node:fs/promises'
 import { createFileRoute } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import * as Sentry from '@sentry/tanstackstart-react'
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export const Route = createFileRoute('/demo/sentry/testing')({
   component: RouteComponent,
@@ -59,7 +59,6 @@ function RouteComponent() {
   const [showTrace, setShowTrace] = useState<Record<string, boolean>>({})
   const [spanOps, setSpanOps] = useState<Record<string, string>>({})
   const [demoStep, setDemoStep] = useState(0)
-  const [replayEvents, setReplayEvents] = useState<string[]>([])
   const [copiedSpan, setCopiedSpan] = useState<string | null>(null)
   const startTimeRef = useRef<string>('')
 
@@ -67,17 +66,6 @@ function RouteComponent() {
     // Set initial timestamp only once on client
     if (!startTimeRef.current) {
       startTimeRef.current = new Date().toISOString()
-    }
-
-    if (demoStep > 0) {
-      const secondsElapsed = (
-        (new Date().getTime() - new Date(startTimeRef.current).getTime()) /
-        1000
-      ).toFixed(1)
-      setReplayEvents((prev) => [
-        ...prev,
-        `Step ${demoStep}: +${secondsElapsed}s`,
-      ])
     }
   }, [demoStep])
 

@@ -6,18 +6,21 @@ import {
 } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 
+import { wrapCreateRootRouteWithSentry } from '@sentry/tanstackstart-react'
 import Header from '../widgets/Header.tsx'
 
 import appCss from '../styles.css?url'
 
 import type { QueryClient } from '@tanstack/react-query'
-import { TanStackQueryLayout } from '@/shared/integrations'
+import { TanStackQueryLayout } from '@/shared/integrations/tanstack-query'
 
 interface MyRouterContext {
   queryClient: QueryClient
 }
 
-export const Route = createRootRouteWithContext<MyRouterContext>()({
+export const Route = wrapCreateRootRouteWithSentry(
+  createRootRouteWithContext,
+)<MyRouterContext>()({
   head: () => ({
     meta: [
       {
