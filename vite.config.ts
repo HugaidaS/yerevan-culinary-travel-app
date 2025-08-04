@@ -11,8 +11,12 @@ const config = defineConfig({
     viteTsConfigPaths({
       projects: ['./tsconfig.json'],
     }),
+    tanstackStart({
+      spa: {
+        enabled: true,
+      },
+    }),
     tailwindcss(),
-    tanstackStart(),
   ],
 })
 

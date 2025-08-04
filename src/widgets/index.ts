@@ -1,0 +1,5 @@
+export { default as FeaturesSection } from '@/widgets/FeaturesSection/FeaturesSection.tsx'
+export { default as HeroSection } from './HeroSection/HeroSection.tsx'
+export { default as FeedbackSection } from './FeedbackSection/FeedbackSection.tsx'
+export { default as InsightsSection } from './InsightsSection/InsightsSection.tsx'
+export { default as Footer } from './Footer.tsx'

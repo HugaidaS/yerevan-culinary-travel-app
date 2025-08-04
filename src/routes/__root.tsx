@@ -7,12 +7,12 @@ import {
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 
 import { wrapCreateRootRouteWithSentry } from '@sentry/tanstackstart-react'
-import Header from '../widgets/Header.tsx'
 
 import appCss from '../styles.css?url'
 
 import type { QueryClient } from '@tanstack/react-query'
 import { TanStackQueryLayout } from '@/shared/integrations/tanstack-query'
+import { ClickSpark } from '@/shared/ui'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -44,8 +44,6 @@ export const Route = wrapCreateRootRouteWithSentry(
 
   component: () => (
     <RootDocument>
-      <Header />
-
       <Outlet />
       <TanStackRouterDevtools />
 
@@ -59,10 +57,15 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <script
+          src="https://flackr.github.io/scroll-timeline/dist/scroll-timeline.js"
+          async
+        ></script>
       </head>
       <body>
         {children}
         <Scripts />
+        <ClickSpark />
       </body>
     </html>
   )
