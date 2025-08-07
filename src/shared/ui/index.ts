@@ -1,3 +1,7 @@
 export { Button, buttonVariants } from './button'
 export { default as ClickSpark } from './clickSpark'
 export { Card } from './card'
+export { Badge } from './badge'
+export { Input } from './input'
+export { Label } from './label'
+export { Textarea } from './textarea'

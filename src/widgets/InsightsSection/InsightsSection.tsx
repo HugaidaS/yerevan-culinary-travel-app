@@ -1,94 +1,116 @@
-import { Button } from '@/shared/ui/button.tsx'
+import { useState } from 'react'
+import { Calendar, Mountain, Utensils, Wheat } from 'lucide-react'
+import { Badge, Card } from '@/shared/ui'
 
-const InsightsSection = () => {
+export default function CuisineHighlights() {
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null)
+
+  const highlights = [
+    {
+      title: 'Ancient Heritage',
+      subtitle: '2000+ Years',
+      description:
+        "Armenian cuisine represents one of the world's oldest culinary traditions, with recipes passed down through millennia of rich cultural heritage.",
+      image: 'https://www.co-traveler.com/en/wp-content/uploads/2023/03/famous-armenian-foods-8.jpg',
+      icon: Calendar,
+      color: 'bg-armenian-red',
+      textColor: 'text-armenian-red',
+    },
+    {
+      title: 'Mountain Fresh',
+      subtitle: 'Highland Ingredients',
+      description:
+        "Sourced from the pristine highlands of Armenia, capturing the pure essence of Ararat's fertile valleys and mountain springs.",
+      image: 'https://theculinarytravelguide.com/wp-content/uploads/2020/01/armenian-aveluk-1067x800.jpg',
+      icon: Mountain,
+      color: 'bg-armenian-gold',
+      textColor: 'text-armenian-gold',
+    },
+    {
+      title: 'Artisan Breads',
+      subtitle: 'Sacred Traditions',
+      description:
+        'From paper-thin lavash to festive gata, Armenian breads tell stories of celebration, spirituality, and daily life through time-honored techniques.',
+      image: 'https://www.willflyforfood.net/wp-content/uploads/2021/07/armenian-food-lavash.jpg',
+      icon: Wheat,
+      color: 'bg-armenian-brown',
+      textColor: 'text-armenian-brown',
+    },
+    {
+      title: 'Fire & Feast',
+      subtitle: 'Khorovats Culture',
+      description:
+        'Master the art of Armenian barbecue, where fire becomes poetry and meat transforms into communal celebration under open skies.',
+      image: 'https://media.cntravellerme.com/photos/6548d7def6a70730b29b2fed/master/w_1600%2Cc_limit/H3YD69.jpg',
+      icon: Utensils,
+      color: 'bg-armenian-orange',
+      textColor: 'text-armenian-orange',
+    },
+  ]
+
   return (
-    <section id="recipes" className="py-20 bg-[#f0ebe2]">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-semibold mb-10 text-center">
-          Featured Recipes
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Recipe Card 1 */}
-          <div className="bg-card rounded-lg overflow-hidden shadow-md transition-transform hover:translate-y-[-5px]">
-            <img
-              src="https://placehold.co/400x300/f4e4b8/c14242?text=Dolma"
-              alt="Dolma"
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2">Stuffed Dolma</h3>
-              <p className="text-muted-foreground mb-4">
-                Grape leaves stuffed with a savory mixture of rice, minced meat,
-                and aromatic herbs.
-              </p>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-armenian-red">
-                  Prep time: 45 mins
-                </span>
-                <Button variant="outline" size="sm">
-                  View Recipe
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          {/* Recipe Card 2 */}
-          <div className="bg-card rounded-lg overflow-hidden shadow-md transition-transform hover:translate-y-[-5px]">
-            <img
-              src="https://placehold.co/400x300/f4e4b8/c14242?text=Khorovats"
-              alt="Khorovats"
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2">
-                Khorovats (Armenian BBQ)
-              </h3>
-              <p className="text-muted-foreground mb-4">
-                Marinated and grilled meat skewers, a staple of Armenian
-                gatherings and celebrations.
-              </p>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-armenian-red">
-                  Prep time: 30 mins
-                </span>
-                <Button variant="outline" size="sm">
-                  View Recipe
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          {/* Recipe Card 3 */}
-          <div className="bg-card rounded-lg overflow-hidden shadow-md transition-transform hover:translate-y-[-5px]">
-            <img
-              src="https://placehold.co/400x300/f4e4b8/c14242?text=Gata"
-              alt="Gata"
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2">Sweet Gata</h3>
-              <p className="text-muted-foreground mb-4">
-                Traditional Armenian sweet bread with a buttery filling, often
-                enjoyed with tea or coffee.
-              </p>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-armenian-red">
-                  Prep time: 60 mins
-                </span>
-                <Button variant="outline" size="sm">
-                  View Recipe
-                </Button>
-              </div>
-            </div>
-          </div>
+    <section className="py-20 px-4 bg-background">
+      <div className="max-w-6xl mx-auto">
+        {/* Clean header */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-armenian-red mb-4">Armenian Cuisine</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Experience authentic flavors that have survived empires and united families for over two millennia.
+          </p>
         </div>
-        <div className="text-center mt-12">
-          <Button variant="armenian" size="lg">
-            View All Recipes
-          </Button>
+
+        {/* Static grid layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8" id="cuisine-highlights-grid">
+          {highlights.map((highlight, index) => {
+            const IconComponent = highlight.icon
+
+            return (
+              <div key={index} onMouseEnter={() => setHoveredCard(index)} onMouseLeave={() => setHoveredCard(null)}>
+                <Card
+                  className="overflow-hidden h-full transition-all duration-300 hover:shadow-lg border-0 bg-card py-0"
+                  id="cuisine-highlight-card"
+                  style={{
+                    animationDelay: `${index * 100}ms`,
+                  }}
+                >
+                  {/* Clean image section */}
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={highlight.image}
+                      alt={highlight.title}
+                      className={`w-full h-full object-cover transition-transform duration-300 ${
+                        hoveredCard === index ? 'scale-105' : ''
+                      }`}
+                    />
+
+                    {/* Subtle overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+
+                    {/* Simple icon */}
+                    <div className={`absolute top-4 right-4 ${highlight.color} p-2 rounded-lg shadow-md animate-glow`}>
+                      <IconComponent className="w-5 h-5 text-white" />
+                    </div>
+
+                    {/* Clean subtitle */}
+                    <div className="absolute bottom-4 left-4">
+                      <Badge variant="secondary" className="bg-white/90 text-gray-800 border-0 animate-glow">
+                        {highlight.subtitle}
+                      </Badge>
+                    </div>
+                  </div>
+
+                  {/* Clean content section */}
+                  <div className="p-6">
+                    <h3 className={`text-xl font-bold ${highlight.textColor} mb-3`}>{highlight.title}</h3>
+
+                    <p className="text-muted-foreground leading-relaxed text-sm">{highlight.description}</p>
+                  </div>
+                </Card>
+              </div>
+            )
+          })}
         </div>
       </div>
     </section>
   )
 }
-export default InsightsSection

@@ -1,159 +1,99 @@
+import { Bitcoin, Facebook, Instagram, Shield, Twitter, Wallet } from 'lucide-react'
+import { Button } from '@/shared/ui'
+
 const Footer = () => {
-  // const date = new Date().getFullYear()
+  const date = new Date().getFullYear()
 
   return (
-    <footer className="bg-[#2d1810] text-white py-12">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <h3 className="text-xl font-semibold mb-4">Armenian Cuisine</h3>
-            <p className="text-white/70">
-              Preserving and sharing the rich culinary traditions of Armenia
-              with food lovers around the world.
+    <footer className="bg-[#2d1810] text-white py-12 px-4">
+      <div className="max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Brand */}
+          <div className="space-y-4">
+            <h3 className="text-2xl font-bold text-armenian-gold">Taste of Armenia</h3>
+            <p className="text-white/80 text-sm">
+              Authentic Armenian culinary experiences that connect you with centuries of rich food culture and
+              tradition.
             </p>
+            <div className="flex space-x-3">
+              <div className="w-8 h-8 bg-armenian-gold rounded-full flex items-center justify-center hover:bg-armenian-gold/80 transition-colors cursor-pointer">
+                <Facebook className="w-4 h-4 text-armenian-brown" />
+              </div>
+              <div className="w-8 h-8 bg-armenian-gold rounded-full flex items-center justify-center hover:bg-armenian-gold/80 transition-colors cursor-pointer">
+                <Instagram className="w-4 h-4 text-armenian-brown" />
+              </div>
+              <div className="w-8 h-8 bg-armenian-gold rounded-full flex items-center justify-center hover:bg-armenian-gold/80 transition-colors cursor-pointer">
+                <Twitter className="w-4 h-4 text-armenian-brown" />
+              </div>
+            </div>
           </div>
-          <div>
-            <h4 className="text-lg font-medium mb-4">Quick Links</h4>
-            <ul className="space-y-2">
+
+          {/* Itineraries */}
+          <div className="space-y-4">
+            <h4 className="text-lg font-semibold text-armenian-gold">Itineraries</h4>
+            <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="text-white/70 hover:text-armenian-cream">
-                  Home
-                </a>
+                <button className="text-white/80 hover:text-armenian-gold transition-colors">1-Day Quick Taste</button>
               </li>
               <li>
-                <a
-                  href="#about"
-                  className="text-white/70 hover:text-armenian-cream"
-                >
-                  About
-                </a>
+                <button className="text-white/80 hover:text-armenian-gold transition-colors">
+                  3-Day Cultural Experience
+                </button>
               </li>
               <li>
-                <a
-                  href="#recipes"
-                  className="text-white/70 hover:text-armenian-cream"
-                >
-                  Recipes
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#contact"
-                  className="text-white/70 hover:text-armenian-cream"
-                >
-                  Contact
-                </a>
+                <button className="text-white/80 hover:text-armenian-gold transition-colors">
+                  7-Day Complete Journey
+                </button>
               </li>
             </ul>
           </div>
-          <div>
-            <h4 className="text-lg font-medium mb-4">Recipe Categories</h4>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-white/70 hover:text-armenian-cream">
-                  Main Dishes
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-white/70 hover:text-armenian-cream">
-                  Appetizers
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-white/70 hover:text-armenian-cream">
-                  Breads & Pastries
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-white/70 hover:text-armenian-cream">
-                  Desserts
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-lg font-medium mb-4">Connect With Us</h4>
-            <div className="flex space-x-4">
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-armenian-red transition-colors"
+
+          {/* Crypto Support */}
+          <div className="space-y-4">
+            <h4 className="text-lg font-semibold text-armenian-gold">Support Us</h4>
+            <p className="text-white/80 text-sm mb-4">Help preserve Armenian culinary heritage with crypto donations</p>
+
+            <div className="space-y-3">
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full bg-transparent border-armenian-gold text-armenian-gold hover:bg-armenian-gold hover:text-armenian-brown transition-all"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                </svg>
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-armenian-red transition-colors"
+                <Bitcoin className="w-4 h-4 mr-2" />
+                Bitcoin Wallet
+              </Button>
+
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full bg-transparent border-armenian-gold text-armenian-gold hover:bg-armenian-gold hover:text-armenian-brown transition-all"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                </svg>
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-armenian-red transition-colors"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
-                </svg>
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-armenian-red transition-colors"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
-                  <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
-                </svg>
-              </a>
+                <Wallet className="w-4 h-4 mr-2" />
+                Ethereum Wallet
+              </Button>
+
+              <div className="flex items-center gap-2 text-xs text-white/60 mt-2">
+                <Shield className="w-3 h-3" />
+                Secure & Anonymous
+              </div>
             </div>
           </div>
         </div>
-        <div className="border-t border-white/20 mt-8 pt-8 text-center text-white/50">
-          {/* <p>&copy; {date} Armenian Cuisine. All rights reserved.</p>*/}
+
+        {/* Bottom Bar */}
+        <div className="border-t border-white/20 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-white/60">
+          <p>&copy; {date} Taste of Armenia. All rights reserved.</p>
+          <div className="flex space-x-6 mt-4 md:mt-0">
+            <a href="#" className="hover:text-armenian-gold transition-colors">
+              Privacy Policy
+            </a>
+            <a href="#" className="hover:text-armenian-gold transition-colors">
+              Terms of Service
+            </a>
+            <a href="#" className="hover:text-armenian-gold transition-colors">
+              Cookie Policy
+            </a>
+          </div>
         </div>
       </div>
     </footer>
