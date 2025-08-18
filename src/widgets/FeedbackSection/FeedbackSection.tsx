@@ -1,4 +1,4 @@
-import { FeedbackForm } from '@/shared/components'
+import { FeedbackForm } from '@/features/feedback/ui'
 
 const FeedbackSection = () => {
   return (

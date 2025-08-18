@@ -11,11 +11,13 @@ const db = {
       tags: ['coffee', 'breakfast', 'lightMeal'],
       factSnippet:
         "Armenian merchants were pioneers of Europe's café culture, opening the first coffeehouses in cities like Vienna and Paris in the 17th century.",
-      averageCheckUSD: 7,
+      averageCheckUSD: 17,
+      googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Afrolab+Roastery+Yerevan',
+      imageUrl: 'https://avatars.mds.yandex.net/get-altay/15401366/2a00000194fde505feb323cf51ca068b9231/XXXL',
     },
     {
       id: 'lumen_coffee',
-      name: 'Lumen Coffee',
+      name: 'Lumen Coffee 1936',
       lat: 40.181825,
       lng: 44.512349,
       shortDescription: 'Minimalist espresso bar with world-class brews.',
@@ -24,7 +26,10 @@ const db = {
       tags: ['coffee', 'breakfast', 'lightMeal'],
       factSnippet:
         'The café is located in a building that was once the ancient Luys bookstore, a hub for knowledge and ideas.',
-      averageCheckUSD: 7,
+      averageCheckUSD: 10,
+      googleMapsUrl:
+        'https://www.google.com/maps/place/Lumen+Coffee+1936/@40.1901999,44.5094495,16z/data=!4m10!1m2!2m1!1sLumen+Coffee+Yerevan!3m6!1s0x406abd92bce4cf53:0xff4791d7e5878ef7!8m2!3d40.1901999!4d44.5184617!15sChRMdW1lbiBDb2ZmZWUgWWVyZXZhbloWIhRsdW1lbiBjb2ZmZWUgeWVyZXZhbpIBC2NvZmZlZV9zaG9wqgFMCg0vZy8xMXJnYl9yMzlfEAEyHxABIhvwjFNI8lMP-DF2yVqzv-x9DCtMAMwqouzAtZoyGBACIhRsdW1lbiBjb2ZmZWUgeWVyZXZhbuABAA!16s%2Fg%2F11jzdrggfm?entry=ttu&g_ep=EgoyMDI1MDgxMy4wIKXMDSoASAFQAw%3D%3D',
+      imageUrl: 'https://avatars.mds.yandex.net/get-altay/7740052/2a00000187994af0bd64e81fd9fd56dcac12/XXXL',
     },
     {
       id: 'sloyonka',
@@ -37,7 +42,9 @@ const db = {
       tags: ['breakfast', 'sweets', 'coffee', 'lightMeal'],
       factSnippet:
         "Puff pastry techniques are part of Armenia's rich baking heritage, blending influences from Silk Road trade routes.",
-      averageCheckUSD: 8,
+      averageCheckUSD: 10,
+      googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Sloyonka+Gastro+Bakery+%26+Coffee+Yerevan',
+      imageUrl: 'https://avatars.mds.yandex.net/get-altay/15426074/2a000001970cfd5cbdfa1ad5bf285c33e14e/XXXL',
     },
     {
       id: 'lavash_restaurant',
@@ -50,6 +57,8 @@ const db = {
       tags: ['breakfast', 'lunch', 'dinner', 'heavyFood', 'historic'],
       factSnippet: 'The tradition of baking lavash in a tonir oven is on the UNESCO Intangible Cultural Heritage list.',
       averageCheckUSD: 20,
+      googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Lavash+Restaurant+Yerevan',
+      imageUrl: 'https://avatars.mds.yandex.net/get-altay/14297579/2a00000196951a0ffadddb1fc5c91541f393/XXXL',
     },
     {
       id: 'ost_lahmajo',
@@ -62,7 +71,9 @@ const db = {
       tags: ['lunch', 'streetFood', 'heavyFood'],
       factSnippet:
         "Lahmajo's origins are a subject of debate; some historical accounts trace the dish back to ancient Armenian pagan traditions.",
-      averageCheckUSD: 6,
+      averageCheckUSD: 8,
+      googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=OST+Lahmajo+Yerevan',
+      imageUrl: 'https://avatars.mds.yandex.net/get-altay/13457355/2a0000018ed2d90fa0831ef1392d3ec0ffc2/XXXL',
     },
     {
       id: 'tumanyan_shaurma',
@@ -76,6 +87,8 @@ const db = {
       factSnippet:
         'This beloved spot is a local institution that has been serving up its famous shawarma since 1998, a true post-Soviet success story.',
       averageCheckUSD: 5,
+      googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Tumanyan+Shaurma+Yerevan',
+      imageUrl: 'https://avatars.mds.yandex.net/get-altay/10834132/2a0000018e0fc32b37c45af5d43493812e6e/XXXL',
     },
     {
       id: 'grand_candy_ponchikanots',
@@ -89,6 +102,8 @@ const db = {
       factSnippet:
         'Ponchik, the beloved fried donut, became a staple snack in Soviet-era bakeries, making it a nostalgic treat for many Armenians.',
       averageCheckUSD: 4,
+      googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Grand+Candy+Ponchikanots+Yerevan',
+      imageUrl: 'https://avatars.mds.yandex.net/get-altay/13477341/2a0000018fa07c716b8d328a25f113342982/XXXL',
     },
     {
       id: 'rubicone_gelato',
@@ -102,12 +117,14 @@ const db = {
       factSnippet:
         'Apricot gelato pays homage to Armenia’s national fruit, the apricot, featured in local culture and cuisine.',
       averageCheckUSD: 5,
+      googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Rubicone+Gelato+Boutique+Yerevan',
+      imageUrl: 'https://avatars.mds.yandex.net/get-altay/12594487/2a0000019069d9804387b5d5f179ece1887b/XXXL',
     },
     {
       id: 'black_angus',
       name: 'Black Angus',
-      lat: 40.1823,
-      lng: 44.5159,
+      lat: 40.1835272,
+      lng: 44.4800886,
       shortDescription: 'Burger chain with premium Angus beef.',
       longDescription:
         'Black Angus delivers hearty burgers made from quality Angus beef. A casual, reliable choice when you need a break from traditional Armenian meals without sacrificing flavor.',
@@ -115,6 +132,8 @@ const db = {
       factSnippet:
         "Founded in 2013, Black Angus represents a newer wave of Yerevan's culinary scene, offering a taste of international comfort food.",
       averageCheckUSD: 10,
+      googleMapsUrl: 'https://maps.app.goo.gl/BtfpPxPBYJcPzHAG9',
+      imageUrl: 'https://avatars.mds.yandex.net/get-altay/11374564/2a00000193ec15bde0a28b46a8a947c98e36/XXXL',
     },
     {
       id: 'nani_streetfood',
@@ -128,6 +147,8 @@ const db = {
       factSnippet:
         'Creative street-food twists showcase how the Armenian diaspora’s adaptability keeps centuries-old recipes alive in modern urban life.',
       averageCheckUSD: 7,
+      googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Nani+National+Streetfood+Yerevan',
+      imageUrl: 'https://avatars.mds.yandex.net/get-altay/16482798/2a00000198242401d56e35f32d510e73820b/XXXL',
     },
     {
       id: 'abovyan_12',
@@ -141,12 +162,15 @@ const db = {
       factSnippet:
         'This historic building was once home to a famous photography studio that captured icons like Charles Aznavour and Aram Khachaturian.',
       averageCheckUSD: 20,
+      googleMapsUrl:
+        'https://www.google.com/maps/search/?api=1&query=Abovyan+12+Courtyard+Caf%C3%A9+%26+Gallery+Yerevan',
+      imageUrl: 'https://avatars.mds.yandex.net/get-altay/2029876/2a0000016de98041ce7f2d2ce8afb9588df9/XXXL',
     },
     {
       id: 'tavern_yerevan',
       name: 'Tavern Yerevan (Pandok)',
-      lat: 40.17874,
-      lng: 44.50183,
+      lat: 40.179007,
+      lng: 44.4920556,
       shortDescription: 'Lively Armenian tavern with khorovats & music.',
       longDescription:
         'Tavern Yerevan is all about hearty khorovats, dolma, and fresh lavash, served with live folk music in a bustling atmosphere. A quintessential Armenian dining experience.',
@@ -154,12 +178,14 @@ const db = {
       factSnippet:
         'In Armenian culture, khorovats (barbecue) is the national dish, symbolizing life lived to the fullest.',
       averageCheckUSD: 22,
+      googleMapsUrl: 'https://maps.app.goo.gl/A7uQUJCGVXXZqmib7',
+      imageUrl: 'https://avatars.mds.yandex.net/get-altay/5308697/2a0000017b87a044f0b0e82192ee22207784/XXXL',
     },
     {
       id: 'artashi_mot',
       name: 'Artashi Mot BBQ',
-      lat: 40.18662,
-      lng: 44.51337,
+      lat: 40.1771367,
+      lng: 44.4969041,
       shortDescription: 'Old-school khorovats with smoky charm.',
       longDescription:
         'Artashi Mot serves juicy skewers of pork, lamb, and quail grilled over grapevine coals. Expect generous herb plates, fire-roasted veggies, and a smoky aroma you’ll carry home.',
@@ -167,12 +193,14 @@ const db = {
       factSnippet:
         "Armenian barbecue, or khorovats, has ancient origins tied to the country's pastoral traditions and is a significant part of social gatherings.",
       averageCheckUSD: 18,
+      googleMapsUrl: 'https://maps.app.goo.gl/7xsRsNr6gEyg2AQc9',
+      imageUrl: 'https://avatars.mds.yandex.net/get-altay/15153151/2a000001967b28d3ae319a29805214c80332/XXXL',
     },
     {
       id: 'zhengyalov_hats_teryan',
       name: 'Zhingyalov Hats (Teryan)',
-      lat: 40.186785,
-      lng: 44.51958,
+      lat: 40.1867794,
+      lng: 44.5196458,
       shortDescription: 'Artsakh herb-stuffed flatbread, vegan-friendly.',
       longDescription:
         'A delicate flatbread packed with up to 20 fresh herbs, griddled to order. Fragrant, healthy, and deeply rooted in Artsakh’s food traditions.',
@@ -180,12 +208,14 @@ const db = {
       factSnippet:
         'This unique flatbread from the Artsakh region became a traditional staple for Armenians in times of famine and war, symbolizing resilience.',
       averageCheckUSD: 5,
+      googleMapsUrl: 'https://maps.app.goo.gl/5JbwyoVGNugNAggy6',
+      imageUrl: 'https://avatars.mds.yandex.net/get-altay/13299246/2a0000018e357e3d1ea4736abd410748c998/XXXL',
     },
     {
       id: 'in_vino',
       name: 'In Vino',
-      lat: 40.187,
-      lng: 44.5089,
+      lat: 40.187037,
+      lng: 44.508926,
       shortDescription: 'Wine alley staple; Armenian wines & platters.',
       longDescription:
         'Cozy and lined with bottles, In Vino offers an extensive Armenian wine list and light pairings—perfect for a relaxed evening.',
@@ -193,19 +223,23 @@ const db = {
       factSnippet:
         "Saryan Street is the heart of Yerevan's wine revival, hosting an annual festival that celebrates Armenia's ancient winemaking heritage.",
       averageCheckUSD: 18,
+      googleMapsUrl: 'https://maps.app.goo.gl/7YJ2x6UXBbgGBmWj6',
+      imageUrl: 'https://avatars.mds.yandex.net/get-altay/13220791/2a0000019330673bbc10c1f36bfc3dd915c8/XXXL',
     },
     {
       id: 'cafe_central',
       name: 'Café Central',
-      lat: 40.1788,
-      lng: 44.5136,
+      lat: 40.1848946,
+      lng: 44.5206642,
       shortDescription: 'Historic café for Armenian coffee & sherbet.',
       longDescription:
         'With old-world charm and sidewalk tables, Café Central is a classic for sipping Armenian coffee brewed in a jazzve or enjoying sweet floral sherbet.',
       tags: ['coffee', 'breakfast', 'historic'],
       factSnippet:
         'This café is named after the historic Viennese Café Central, a legendary hub for intellectuals like Freud and Trotsky, but was founded in Yerevan in 2005.',
-      averageCheckUSD: 5,
+      averageCheckUSD: 10,
+      googleMapsUrl: 'https://maps.app.goo.gl/XbKKrBPNK2sPjbrT8',
+      imageUrl: 'https://avatars.mds.yandex.net/get-altay/16230048/2a000001975062db9272ab5175b35a210003/XXXL',
     },
     {
       id: 'kond_house',
@@ -219,19 +253,39 @@ const db = {
       factSnippet:
         "Kond is Yerevan's oldest quarter, an 'island of old Yerevan' with a unique history that largely escaped Soviet-era reconstruction.",
       averageCheckUSD: 20,
+      googleMapsUrl: 'https://maps.app.goo.gl/gGDHy1zePcihqLa98',
+      imageUrl:
+        'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2f/6b/c1/af/interior-of-winer-garden.jpg?w=1100&h=600&s=1',
     },
     {
       id: 'master_class_bbq',
-      name: 'Master Class BBQ (Saryan)',
-      lat: 40.18476,
-      lng: 44.50799,
-      shortDescription: 'Famous Saryan Street spot for juicy kebabs.',
+      name: 'Master Class BBQ (Tumanyan)',
+      lat: 40.1822446,
+      lng: 44.4998857,
+      shortDescription: 'Famous Tumanyan Street spot for juicy kebabs.',
       longDescription:
-        'Master Class BBQ is a carnivore’s delight—plump, smoky kebabs grilled to perfection right on bustling Saryan Street. Known for consistency and generous portions, it’s a favorite pre-wine-stop meal before exploring the nearby bars and cafes.',
+        'Master Class BBQ is a carnivore’s delight—plump, smoky kebabs grilled to perfection right on bustling Tumanyan Street. Known for consistency and generous portions, it’s a favorite pre-wine-stop meal before exploring the nearby bars and cafes.',
       tags: ['lunch', 'dinner', 'heavyFood', 'streetFood'],
       factSnippet:
         "The word khorovats (Armenian BBQ) is defined by one historian as an 'Armenian word for life lived to the fullest and the celebration of good weather'.",
       averageCheckUSD: 16,
+      googleMapsUrl: 'https://maps.app.goo.gl/jN8GgLeyXw4631Cj9',
+      imageUrl: 'https://avatars.mds.yandex.net/get-altay/14014133/2a00000193ca95eed73603f5d56a4741bc1a/XXXL',
+    },
+    {
+      id: 'family_house',
+      name: 'Family House',
+      lat: 40.1789758,
+      lng: 44.5026903,
+      shortDescription: 'Locals love this spot for hinkali—rumored to be even better than in Georgia.',
+      longDescription:
+        'Family House is where Yerevan gathers to savor steaming plates of hinkali, the plump Georgian dumplings filled with juicy broth and spiced meat. Tucked near the city center, this restaurant has earned a loyal following among locals who insist its hinkali outshine even those across the border. The cozy, slightly old-school atmosphere makes it ideal for long dinners, late-night feasts, and sharing stories over generous portions of comfort food.',
+      tags: ['lunch', 'dinner', 'bestAtNight', 'historic'],
+      factSnippet:
+        'Hinkali are traditionally eaten with your hands—bite, slurp the broth, then finish the dumpling. Forks are frowned upon!',
+      averageCheckUSD: 10,
+      googleMapsUrl: 'https://maps.app.goo.gl/NX3SxgtMsWLmp45R8',
+      imageUrl: 'https://avatars.mds.yandex.net/get-altay/15157522/2a0000019434e2fa5803c59dfcf261f74624/XXXL',
     },
   ],
   itineraries: {
@@ -289,7 +343,7 @@ const db = {
         day: 2,
         meals: [
           { type: 'breakfast', placeId: 'sloyonka' },
-          { type: 'lunch', placeId: 'lavash_restaurant' },
+          { type: 'lunch', placeId: 'family_house' },
           { type: 'snack', placeId: 'grand_candy_ponchikanots' },
           { type: 'dinner', placeId: 'black_angus' },
         ],
