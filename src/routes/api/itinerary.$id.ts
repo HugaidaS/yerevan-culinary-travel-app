@@ -1,4 +1,4 @@
-// app/routes/api/itinerary/$id.ts
+// app/routes/api/itinerary/$duration.ts
 import { createServerFileRoute } from '@tanstack/react-start/server'
 import type { ApiResponse, ItineraryWithDetails } from '@/shared/types.ts'
 import { getItineraryWithDetails } from '@/shared/integrations/db/queries.ts'

@@ -14,6 +14,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as DemoRouteRouteImport } from './routes/demo/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoIndexRouteImport } from './routes/demo/index'
+import { Route as ItinerariesIdRouteImport } from './routes/itineraries/$id'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
@@ -42,6 +43,11 @@ const DemoIndexRoute = DemoIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => DemoRouteRoute,
+} as any)
+const ItinerariesIdRoute = ItinerariesIdRouteImport.update({
+  id: '/itineraries/$id',
+  path: '/itineraries/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
   id: '/tanstack-query',
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/demo': typeof DemoRouteRouteWithChildren
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/itineraries/$id': typeof ItinerariesIdRoute
   '/demo/': typeof DemoIndexRoute
   '/demo/sentry/testing': typeof DemoSentryTestingRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
@@ -111,6 +118,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/itineraries/$id': typeof ItinerariesIdRoute
   '/demo': typeof DemoIndexRoute
   '/demo/sentry/testing': typeof DemoSentryTestingRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
@@ -121,6 +129,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/demo': typeof DemoRouteRouteWithChildren
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/itineraries/$id': typeof ItinerariesIdRoute
   '/demo/': typeof DemoIndexRoute
   '/demo/sentry/testing': typeof DemoSentryTestingRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
@@ -132,6 +141,7 @@ export interface FileRouteTypes {
     | '/'
     | '/demo'
     | '/demo/tanstack-query'
+    | '/itineraries/$id'
     | '/demo/'
     | '/demo/sentry/testing'
     | '/demo/start/api-request'
@@ -140,6 +150,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/demo/tanstack-query'
+    | '/itineraries/$id'
     | '/demo'
     | '/demo/sentry/testing'
     | '/demo/start/api-request'
@@ -149,6 +160,7 @@ export interface FileRouteTypes {
     | '/'
     | '/demo'
     | '/demo/tanstack-query'
+    | '/itineraries/$id'
     | '/demo/'
     | '/demo/sentry/testing'
     | '/demo/start/api-request'
@@ -158,6 +170,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DemoRouteRoute: typeof DemoRouteRouteWithChildren
+  ItinerariesIdRoute: typeof ItinerariesIdRoute
 }
 export interface FileServerRoutesByFullPath {
   '/api/demo-names': typeof ApiDemoNamesServerRoute
@@ -249,6 +262,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/demo/'
       preLoaderRoute: typeof DemoIndexRouteImport
       parentRoute: typeof DemoRouteRoute
+    }
+    '/itineraries/$id': {
+      id: '/itineraries/$id'
+      path: '/itineraries/$id'
+      fullPath: '/itineraries/$id'
+      preLoaderRoute: typeof ItinerariesIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/demo/tanstack-query': {
       id: '/demo/tanstack-query'
@@ -357,6 +377,7 @@ const DemoRouteRouteWithChildren = DemoRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DemoRouteRoute: DemoRouteRouteWithChildren,
+  ItinerariesIdRoute: ItinerariesIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

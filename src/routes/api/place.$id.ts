@@ -1,4 +1,4 @@
-// app/routes/api/place/$id.ts
+// app/routes/api/place/$duration.ts
 import { createServerFileRoute } from '@tanstack/react-start/server'
 import type { ApiResponse, Place } from '@/shared/types.ts'
 import { getPlaceById } from '@/shared/integrations/db/queries.ts'
