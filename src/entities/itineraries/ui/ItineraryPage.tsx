@@ -256,23 +256,32 @@ export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
               </div>
 
               {/* Footer */}
-              <div className="flex items-center justify-between pt-4 border-t border-border/20 mt-auto">
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-1">
+              <div className="pt-4 border-t border-border/20 mt-auto">
+                {/* Price and Fact Snippet */}
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
                     <DollarSign className="w-4 h-4" />
                     <span>~${place.averageCheckUSD}</span>
                   </div>
+                  {place.googleMapsUrl && (
+                    <Button
+                      variant="armenian"
+                      size="sm"
+                      onClick={() => window.open(place.googleMapsUrl, '_blank')}
+                      className="gap-1"
+                    >
+                      <MapPin className="w-4 h-4" />
+                      View on Maps
+                    </Button>
+                  )}
                 </div>
-                {place.googleMapsUrl && (
-                  <Button
-                    variant="armenian"
-                    size="sm"
-                    onClick={() => window.open(place.googleMapsUrl, '_blank')}
-                    className="gap-1"
-                  >
-                    <MapPin className="w-4 h-4" />
-                    View on Maps
-                  </Button>
+
+                {/* Fact Snippet */}
+                {place.factSnippet && (
+                  <div className="text-xs text-muted-foreground/80 italic bg-muted/30 p-2 rounded border-l-2 border-armenian-red/20">
+                    <Info className="w-3 h-3 inline mr-1 opacity-60" />
+                    {place.factSnippet}
+                  </div>
                 )}
               </div>
             </div>
@@ -379,9 +388,9 @@ export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
       </header>
 
       <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Main Content - wider */}
-          <div className="lg:col-span-3">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8">
+          {/* Main Content - 3 columns (60%) */}
+          <div className="md:col-span-3">
             {/* Day selector for multi-day itineraries */}
             {itinerary.days > 1 && (
               <div className="mb-8 print:hidden">
@@ -416,26 +425,15 @@ export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
             )}
           </div>
 
-          {/* Map Sidebar - smaller */}
-          <div className="lg:col-span-1">
+          {/* Map Sidebar - 2 columns (40%) */}
+          <div className="md:col-span-2">
             <div className="sticky top-24 print:hidden">
-              <Card className="p-6">
-                <h3 className="mb-4">Today's Locations</h3>
-                <div className="h-64 bg-muted rounded-lg">
-                  <MapComponent locations={mapLocations} />
+              <Card className="p-0">
+                <div className="p-4 pb-3">
+                  <h3 className="text-lg">Today's Locations</h3>
                 </div>
-                <div className="mt-4 space-y-2">
-                  {mapLocations.map((location, index) => (
-                    <div key={location.id} className="flex items-center gap-3 text-sm">
-                      <div className="w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center text-xs">
-                        {index + 1}
-                      </div>
-                      <div>
-                        <div className="font-medium">{location.name}</div>
-                        <div className="text-muted-foreground text-xs">{location.description}</div>
-                      </div>
-                    </div>
-                  ))}
+                <div className="h-96 bg-background">
+                  <MapComponent locations={mapLocations} />
                 </div>
               </Card>
             </div>
