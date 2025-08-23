@@ -1,132 +1,37 @@
-import { useMemo, useState } from 'react'
+import { Suspense, lazy, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from '@tanstack/react-router'
-import {
-  ArrowLeft,
-  Calendar,
-  Coffee,
-  Cookie,
-  DollarSign,
-  Info,
-  Leaf,
-  MapPin,
-  Printer,
-  Star,
-  Utensils,
-  Wine,
-} from 'lucide-react'
+import { ArrowLeft, Coffee, Cookie, Info, MapPin, Printer, Utensils, Wine } from 'lucide-react'
 import { ImageWithFallback } from './ImageWithFallback'
-import MapComponent from './MapComponent'
 import type { ItineraryWithDetails, MapLocation } from '@/shared/types'
-import { Badge, Button, Card, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/shared/ui'
+import { env } from '@/env'
+import { Badge, Button, Card } from '@/shared/ui'
+import {
+  getMealTypeBorderColor,
+  getMealTypeColor,
+  getPriceTag,
+  getTagColor,
+  getTagIcon,
+  normalizeLatLngWithRegion,
+  parseCoordsFromGoogleUrl,
+} from '@/entities/itineraries/utils'
+
+const GoogleMap = lazy(() => import('./GoogleMap'))
 
 interface ItineraryPageProps {
   itinerary: ItineraryWithDetails
 }
 
-const getTagIcon = (tagName: string) => {
-  const tag = tagName.toLowerCase()
-  switch (tag) {
-    case 'coffee':
-      return Coffee
-    case 'breakfast':
-    case 'lunch':
-    case 'dinner':
-      return Utensils
-    case 'sweets':
-    case 'snack':
-      return Cookie
-    case 'lightmeal':
-      return Leaf
-    case 'heavyfood':
-      return Utensils
-    case 'streetfood':
-      return Star
-    case 'historic':
-      return Calendar
-    case 'evening':
-    case 'bestatnight':
-      return Wine
-    default:
-      return Star
-  }
-}
-
-const getTagColor = (tagName: string) => {
-  const tag = tagName.toLowerCase()
-  switch (tag) {
-    case 'coffee':
-      return 'bg-amber-100 text-amber-800 border-amber-200'
-    case 'breakfast':
-      return 'bg-yellow-100 text-yellow-800 border-yellow-200'
-    case 'lunch':
-      return 'bg-orange-100 text-orange-800 border-orange-200'
-    case 'dinner':
-      return 'bg-red-100 text-red-800 border-red-200'
-    case 'sweets':
-    case 'snack':
-      return 'bg-pink-100 text-pink-800 border-pink-200'
-    case 'lightmeal':
-      return 'bg-green-100 text-green-800 border-green-200'
-    case 'heavyfood':
-      return 'bg-red-100 text-red-800 border-red-200'
-    case 'streetfood':
-      return 'bg-blue-100 text-blue-800 border-blue-200'
-    case 'historic':
-      return 'bg-purple-100 text-purple-800 border-purple-200'
-    case 'evening':
-    case 'bestatnight':
-      return 'bg-indigo-100 text-indigo-800 border-indigo-200'
-    case 'veganfriendly':
-      return 'bg-emerald-100 text-emerald-800 border-emerald-200'
-    case 'requiresbooking':
-      return 'bg-gray-100 text-gray-800 border-gray-200'
-    default:
-      return 'bg-gray-100 text-gray-800 border-gray-200'
-  }
-}
-
-const getMealTypeColor = (mealTypeName: string) => {
-  const mealType = mealTypeName.toLowerCase()
-  switch (mealType) {
-    case 'breakfast':
-      return 'text-yellow-600'
-    case 'lunch':
-      return 'text-orange-600'
-    case 'dinner':
-      return 'text-red-600'
-    case 'snack':
-      return 'text-pink-600'
-    default:
-      return 'text-gray-600'
-  }
-}
-
-const getMealTypeBorderColor = (mealTypeName: string) => {
-  const mealType = mealTypeName.toLowerCase()
-  switch (mealType) {
-    case 'breakfast':
-      return 'border-yellow-400'
-    case 'lunch':
-      return 'border-orange-400'
-    case 'dinner':
-      return 'border-red-400'
-    case 'snack':
-      return 'border-pink-400'
-    default:
-      return 'border-gray-400'
-  }
-}
-
-const getPriceTag = (price: number) => {
-  if (price <= 8) return { label: 'Budget', color: 'bg-green-100 text-green-800 border-green-200' }
-  if (price <= 15) return { label: 'Mid-range', color: 'bg-yellow-100 text-yellow-800 border-yellow-200' }
-  return { label: 'Premium', color: 'bg-red-100 text-red-800 border-red-200' }
-}
+// helpers moved to '@/entities/itineraries/utils'
 
 export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
   const navigate = useNavigate()
   const [selectedDay, setSelectedDay] = useState(1)
   const [isPrintView, setIsPrintView] = useState(false)
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const currentDay = itinerary.schedule.find((day) => day.dayNumber === selectedDay)
 
@@ -135,14 +40,21 @@ export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
     const locations: Array<MapLocation> = []
 
     if (currentDay?.meals) {
+      // Yerevan bounding box as a sanity region (approx)
+      const yerevanBounds = { minLat: 40.08, maxLat: 40.25, minLng: 44.4, maxLng: 44.63 }
       for (const meal of currentDay.meals) {
         const place = meal.place
+        // Prefer parsed coords from Google URL if present; else normalize stored lat/lng
+        const parsed = parseCoordsFromGoogleUrl(place.googleMapsUrl)
+        const normalized = parsed ?? normalizeLatLngWithRegion(place.lat, place.lng, yerevanBounds)
+        if (!normalized) continue
         locations.push({
           id: place.id,
           name: place.name,
-          lat: place.lat,
-          lng: place.lng,
+          lat: normalized.lat,
+          lng: normalized.lng,
           description: place.shortDescription,
+          googleMapsUrl: place.googleMapsUrl,
         })
       }
     }
@@ -174,15 +86,15 @@ export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
     return (
       <Card
         key={`${meal.placeId}-${index}`}
-        className="mb-6 overflow-hidden bg-card border border-border/20 hover:border-border/40 transition-all duration-300 hover:shadow-lg animate-slide-in"
+        className="mb-6 overflow-hidden bg-card border border-border/20 hover:border-border/40 transition-all duration-300 hover:shadow-lg animate-slide-in p-0"
       >
-        <div className="flex min-h-[200px]">
+        <div className="flex items-stretch min-h-[200px]">
           {/* Image on the left - full height */}
-          <div className="w-72 flex-shrink-0 overflow-hidden">
+          <div className="w-72 flex-shrink-0 overflow-hidden self-stretch">
             <ImageWithFallback
               src={place.imageUrl || 'https://placehold.co/600x400/png?text=Placeholder+Image'}
               alt={place.name}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-center"
             />
           </div>
 
@@ -204,24 +116,6 @@ export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
 
                   {/* Short description */}
                   <p className="text-muted-foreground text-sm">{place.shortDescription}</p>
-                </div>
-
-                {/* Info button */}
-                <div className="ml-4">
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <div>
-                          <Button variant="ghost" size="sm" className="p-2 h-8 w-8">
-                            <Info className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent className="max-w-xs">
-                        <p>{place.factSnippet || 'No additional information available.'}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
                 </div>
               </div>
             </div>
@@ -258,28 +152,28 @@ export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
               {/* Footer */}
               <div className="pt-4 border-t border-border/20 mt-auto">
                 {/* Price and Fact Snippet */}
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                    <DollarSign className="w-4 h-4" />
-                    <span>~${place.averageCheckUSD}</span>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground">
+                    <span>Average check: ~${place.averageCheckUSD} USD</span>
                   </div>
                   {place.googleMapsUrl && (
                     <Button
-                      variant="armenian"
+                      variant="ghost"
                       size="sm"
                       onClick={() => window.open(place.googleMapsUrl, '_blank')}
-                      className="gap-1"
+                      className="gap-1 text-muted-foreground hover:text-foreground"
+                      aria-label={`Open ${place.name} in Google Maps`}
                     >
                       <MapPin className="w-4 h-4" />
-                      View on Maps
+                      Open in Maps
                     </Button>
                   )}
                 </div>
 
                 {/* Fact Snippet */}
                 {place.factSnippet && (
-                  <div className="text-xs text-muted-foreground/80 italic bg-muted/30 p-2 rounded border-l-2 border-armenian-red/20">
-                    <Info className="w-3 h-3 inline mr-1 opacity-60" />
+                  <div className="text-sm md:text-base text-muted-foreground bg-muted/50 p-3 rounded border-l-4 border-armenian-red/30 leading-relaxed">
+                    <Info className="w-4 h-4 inline mr-2 opacity-70 align-text-top" />
                     {place.factSnippet}
                   </div>
                 )}
@@ -366,31 +260,31 @@ export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="w-full px-4 md:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="sm" onClick={handleBack} className="print:hidden">
+            <Button variant="armenianOutline" size="sm" onClick={handleBack} className="print:hidden">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Button>
             <div>
-              <h1 className="text-xl font-semibold">Armenian Food Journey</h1>
+              <h1 className="text-2xl font-semibold leading-tight">{itinerary.name}</h1>
               <p className="text-sm text-muted-foreground">
-                {itinerary.name} • {itinerary.days} Day{itinerary.days > 1 ? 's' : ''} Itinerary
+                {itinerary.days} Day{itinerary.days > 1 ? 's' : ''} Culinary Journey
               </p>
             </div>
           </div>
 
-          <Button variant="outline" size="sm" onClick={handlePrint} className="print:hidden">
+          <Button variant="armenian" size="sm" onClick={handlePrint} className="print:hidden">
             <Printer className="w-4 h-4 mr-2" />
             Print
           </Button>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8">
+      <div className="w-full px-4 md:px-6 py-8">
+        <div className="grid grid-cols-1 min-[1120px]:grid-cols-12 gap-4 md:gap-8">
           {/* Main Content - 3 columns (60%) */}
-          <div className="md:col-span-3">
+          <div className="col-span-1 min-[1120px]:col-span-7">
             {/* Day selector for multi-day itineraries */}
             {itinerary.days > 1 && (
               <div className="mb-8 print:hidden">
@@ -398,10 +292,10 @@ export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
                   {itinerary.schedule.map((day) => (
                     <Button
                       key={day.dayNumber}
-                      variant={selectedDay === day.dayNumber ? 'default' : 'outline'}
+                      variant={selectedDay === day.dayNumber ? 'armenian' : 'armenianOutline'}
                       size="sm"
                       onClick={() => setSelectedDay(day.dayNumber)}
-                      className="min-w-[80px]"
+                      className="min-w-[80px] rounded-full shadow-sm"
                     >
                       Day {day.dayNumber}
                     </Button>
@@ -426,14 +320,22 @@ export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
           </div>
 
           {/* Map Sidebar - 2 columns (40%) */}
-          <div className="md:col-span-2">
-            <div className="sticky top-24 print:hidden">
-              <Card className="p-0">
-                <div className="p-4 pb-3">
+          <div className="col-span-1 min-[1120px]:col-span-5">
+            <div className="min-[1120px]:sticky min-[1120px]:top-24 print:hidden">
+              <Card className="p-0 overflow-hidden">
+                <div className="p-4 pb-3 border-b border-border/20">
                   <h3 className="text-lg">Today's Locations</h3>
                 </div>
-                <div className="h-96 bg-background">
-                  <MapComponent locations={mapLocations} />
+                <div className="bg-background min-[1120px]:h-[calc(100vh-8rem)] min-h-[320px] min-[1120px]:min-h-[420px]">
+                  {env.VITE_GOOGLE_MAPS_API_KEY && isClient ? (
+                    <Suspense fallback={<div className="w-full h-full bg-muted" />}>
+                      <GoogleMap locations={mapLocations} />
+                    </Suspense>
+                  ) : (
+                    <div className="w-full h-full bg-muted rounded-lg flex items-center justify-center text-center p-4 text-sm text-muted-foreground">
+                      Google Maps API key not configured or SSR. Add VITE_GOOGLE_MAPS_API_KEY to use the map.
+                    </div>
+                  )}
                 </div>
               </Card>
             </div>

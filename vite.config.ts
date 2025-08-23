@@ -1,8 +1,7 @@
 import { defineConfig } from 'vite'
-import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteTsConfigPaths from 'vite-tsconfig-paths'
 import tailwindcss from '@tailwindcss/vite'
-
+import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import { wrapVinxiConfigWithSentry } from '@sentry/tanstackstart-react'
 
 const config = defineConfig({
@@ -16,6 +15,7 @@ const config = defineConfig({
         enabled: true,
       },
     }),
+
     tailwindcss(),
   ],
 })
