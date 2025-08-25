@@ -1,12 +1,6 @@
 import * as Sentry from '@sentry/tanstackstart-react'
-import {
-  createStartHandler,
-  defaultStreamHandler,
-} from '@tanstack/react-start/server'
-import {
-  createMiddleware,
-  registerGlobalMiddleware,
-} from '@tanstack/react-start'
+import { createStartHandler, defaultStreamHandler } from '@tanstack/react-start/server'
+import { createMiddleware, registerGlobalMiddleware } from '@tanstack/react-start'
 import { createRouter } from './router.tsx'
 
 Sentry.init({
@@ -30,9 +24,7 @@ registerGlobalMiddleware({
       console.log('global server middleware running')
       return next()
     }),
-    createMiddleware({ type: 'function' }).server(
-      Sentry.sentryGlobalServerMiddlewareHandler(),
-    ),
+    createMiddleware({ type: 'function' }).server(Sentry.sentryGlobalServerMiddlewareHandler()),
   ],
 })
 

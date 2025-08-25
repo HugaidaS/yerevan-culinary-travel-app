@@ -12,10 +12,17 @@ import { createServerRootRoute } from '@tanstack/react-start/server'
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as DemoRouteRouteImport } from './routes/demo/route'
+import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoIndexRouteImport } from './routes/demo/index'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as ItinerariesIdRouteImport } from './routes/itineraries/$id'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
+import { Route as AdminTagsRouteImport } from './routes/admin/tags'
+import { Route as AdminPlacesRouteImport } from './routes/admin/places'
+import { Route as AdminMealTypesRouteImport } from './routes/admin/meal-types'
+import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as AdminItinerariesRouteImport } from './routes/admin/itineraries'
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
 import { Route as DemoSentryTestingRouteImport } from './routes/demo/sentry.testing'
@@ -34,6 +41,11 @@ const DemoRouteRoute = DemoRouteRouteImport.update({
   path: '/demo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -44,6 +56,11 @@ const DemoIndexRoute = DemoIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DemoRouteRoute,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const ItinerariesIdRoute = ItinerariesIdRouteImport.update({
   id: '/itineraries/$id',
   path: '/itineraries/$id',
@@ -53,6 +70,31 @@ const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
   id: '/tanstack-query',
   path: '/tanstack-query',
   getParentRoute: () => DemoRouteRoute,
+} as any)
+const AdminTagsRoute = AdminTagsRouteImport.update({
+  id: '/tags',
+  path: '/tags',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminPlacesRoute = AdminPlacesRouteImport.update({
+  id: '/places',
+  path: '/places',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminMealTypesRoute = AdminMealTypesRouteImport.update({
+  id: '/meal-types',
+  path: '/meal-types',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminItinerariesRoute = AdminItinerariesRouteImport.update({
+  id: '/itineraries',
+  path: '/itineraries',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 const DemoStartServerFuncsRoute = DemoStartServerFuncsRouteImport.update({
   id: '/start/server-funcs',
@@ -107,9 +149,16 @@ const ApiItineraryIdServerRoute = ApiItineraryIdServerRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/demo': typeof DemoRouteRouteWithChildren
+  '/admin/itineraries': typeof AdminItinerariesRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/meal-types': typeof AdminMealTypesRoute
+  '/admin/places': typeof AdminPlacesRoute
+  '/admin/tags': typeof AdminTagsRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/itineraries/$id': typeof ItinerariesIdRoute
+  '/admin/': typeof AdminIndexRoute
   '/demo/': typeof DemoIndexRoute
   '/demo/sentry/testing': typeof DemoSentryTestingRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
@@ -117,8 +166,14 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin/itineraries': typeof AdminItinerariesRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/meal-types': typeof AdminMealTypesRoute
+  '/admin/places': typeof AdminPlacesRoute
+  '/admin/tags': typeof AdminTagsRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/itineraries/$id': typeof ItinerariesIdRoute
+  '/admin': typeof AdminIndexRoute
   '/demo': typeof DemoIndexRoute
   '/demo/sentry/testing': typeof DemoSentryTestingRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
@@ -127,9 +182,16 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/demo': typeof DemoRouteRouteWithChildren
+  '/admin/itineraries': typeof AdminItinerariesRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/meal-types': typeof AdminMealTypesRoute
+  '/admin/places': typeof AdminPlacesRoute
+  '/admin/tags': typeof AdminTagsRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/itineraries/$id': typeof ItinerariesIdRoute
+  '/admin/': typeof AdminIndexRoute
   '/demo/': typeof DemoIndexRoute
   '/demo/sentry/testing': typeof DemoSentryTestingRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
@@ -139,9 +201,16 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/demo'
+    | '/admin/itineraries'
+    | '/admin/login'
+    | '/admin/meal-types'
+    | '/admin/places'
+    | '/admin/tags'
     | '/demo/tanstack-query'
     | '/itineraries/$id'
+    | '/admin/'
     | '/demo/'
     | '/demo/sentry/testing'
     | '/demo/start/api-request'
@@ -149,8 +218,14 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin/itineraries'
+    | '/admin/login'
+    | '/admin/meal-types'
+    | '/admin/places'
+    | '/admin/tags'
     | '/demo/tanstack-query'
     | '/itineraries/$id'
+    | '/admin'
     | '/demo'
     | '/demo/sentry/testing'
     | '/demo/start/api-request'
@@ -158,9 +233,16 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/demo'
+    | '/admin/itineraries'
+    | '/admin/login'
+    | '/admin/meal-types'
+    | '/admin/places'
+    | '/admin/tags'
     | '/demo/tanstack-query'
     | '/itineraries/$id'
+    | '/admin/'
     | '/demo/'
     | '/demo/sentry/testing'
     | '/demo/start/api-request'
@@ -169,6 +251,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren
   DemoRouteRoute: typeof DemoRouteRouteWithChildren
   ItinerariesIdRoute: typeof ItinerariesIdRoute
 }
@@ -249,6 +332,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -263,6 +353,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoIndexRouteImport
       parentRoute: typeof DemoRouteRoute
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/itineraries/$id': {
       id: '/itineraries/$id'
       path: '/itineraries/$id'
@@ -276,6 +373,41 @@ declare module '@tanstack/react-router' {
       fullPath: '/demo/tanstack-query'
       preLoaderRoute: typeof DemoTanstackQueryRouteImport
       parentRoute: typeof DemoRouteRoute
+    }
+    '/admin/tags': {
+      id: '/admin/tags'
+      path: '/tags'
+      fullPath: '/admin/tags'
+      preLoaderRoute: typeof AdminTagsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/places': {
+      id: '/admin/places'
+      path: '/places'
+      fullPath: '/admin/places'
+      preLoaderRoute: typeof AdminPlacesRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/meal-types': {
+      id: '/admin/meal-types'
+      path: '/meal-types'
+      fullPath: '/admin/meal-types'
+      preLoaderRoute: typeof AdminMealTypesRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/itineraries': {
+      id: '/admin/itineraries'
+      path: '/itineraries'
+      fullPath: '/admin/itineraries'
+      preLoaderRoute: typeof AdminItinerariesRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
     '/demo/start/server-funcs': {
       id: '/demo/start/server-funcs'
@@ -354,6 +486,28 @@ declare module '@tanstack/react-start/server' {
   }
 }
 
+interface AdminRouteRouteChildren {
+  AdminItinerariesRoute: typeof AdminItinerariesRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminMealTypesRoute: typeof AdminMealTypesRoute
+  AdminPlacesRoute: typeof AdminPlacesRoute
+  AdminTagsRoute: typeof AdminTagsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminItinerariesRoute: AdminItinerariesRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminMealTypesRoute: AdminMealTypesRoute,
+  AdminPlacesRoute: AdminPlacesRoute,
+  AdminTagsRoute: AdminTagsRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
+)
+
 interface DemoRouteRouteChildren {
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
   DemoIndexRoute: typeof DemoIndexRoute
@@ -376,6 +530,7 @@ const DemoRouteRouteWithChildren = DemoRouteRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRouteRoute: AdminRouteRouteWithChildren,
   DemoRouteRoute: DemoRouteRouteWithChildren,
   ItinerariesIdRoute: ItinerariesIdRoute,
 }
