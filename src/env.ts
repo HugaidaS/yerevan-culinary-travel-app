@@ -16,6 +16,7 @@ export const env = createEnv({
   client: {
     VITE_APP_TITLE: z.string().min(1).optional(),
     VITE_GOOGLE_MAPS_API_KEY: z.string().optional(),
+    VITE_CONVEX_URL: z.string().url().optional(),
   },
 
   /**

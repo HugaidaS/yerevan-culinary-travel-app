@@ -1,6 +1,8 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import type { ApiResponse, Place } from '@/shared/types.ts'
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query'
+import { convexQuery, useConvexMutation } from '@convex-dev/react-query'
+import { api } from '../../../convex/_generated/api'
+import type { Place } from '@/shared/types.ts'
 import { Button, Card, Input, Label, Textarea } from '@/shared/ui'
 
 export const Route = createFileRoute('/admin/places')({
@@ -8,37 +10,13 @@ export const Route = createFileRoute('/admin/places')({
 })
 
 function PlacesPage() {
-  const qc = useQueryClient()
-  const { data, isLoading } = useQuery({
-    queryKey: ['admin', 'places'],
-    queryFn: async () => {
-      const res = await fetch('/api/places')
-      return (await res.json()) as ApiResponse<Array<Place>>
-    },
-  })
+  const { data: places } = useSuspenseQuery(convexQuery(api.places.getAll, {}))
 
-  const createMut = useMutation({
-    mutationFn: async (input: Place) => {
-      const res = await fetch('/api/places', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(input),
-      })
-      return (await res.json()) as ApiResponse<Place>
-    },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['admin', 'places'] }),
+  const { mutate: createPlace, isPending: isCreating } = useMutation({
+    mutationFn: useConvexMutation(api.places.create),
   })
-
-  const deleteMut = useMutation({
-    mutationFn: async (id: string) => {
-      const res = await fetch('/api/places', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id }),
-      })
-      return (await res.json()) as ApiResponse<boolean>
-    },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['admin', 'places'] }),
+  const { mutate: removePlace, isPending: isDeleting } = useMutation({
+    mutationFn: useConvexMutation(api.places.remove),
   })
 
   const handleAdd = (e: React.FormEvent<HTMLFormElement>) => {
@@ -70,7 +48,7 @@ function PlacesPage() {
       tagIds: [],
       mealTypeIds: [],
     }
-    createMut.mutate(place)
+    createPlace(place)
     form.reset()
   }
 
@@ -81,42 +59,39 @@ function PlacesPage() {
       </div>
 
       <Card className="p-4 space-y-3">
-        {isLoading && <div>Loading...</div>}
-        {!isLoading && (
-          <div className="grid gap-3 sm:grid-cols-2">
-            {data?.data.map((p) => (
-              <div key={p.id} className="border rounded overflow-hidden">
-                <div
-                  className="aspect-video bg-muted"
-                  style={{ backgroundImage: `url(${p.imageUrl})`, backgroundSize: 'cover' }}
-                />
-                <div className="p-3 space-y-1">
-                  <div className="font-medium">{p.name}</div>
-                  <div className="text-xs text-muted-foreground line-clamp-2">{p.shortDescription}</div>
-                  <div className="text-xs text-muted-foreground">Avg check: ${p.averageCheckUSD}</div>
-                  <div className="flex gap-2 pt-2">
-                    <a href={p.googleMapsUrl} target="_blank" rel="noreferrer" className="text-xs underline">
-                      Map
-                    </a>
-                    <Link to={'/itineraries/$id'} params={{ id: 'yerevan-1day' }} className="text-xs underline">
-                      View sample itinerary
-                    </Link>
-                  </div>
-                  <div className="pt-2">
-                    <Button
-                      size="sm"
-                      variant="destructive"
-                      onClick={() => deleteMut.mutate(p.id)}
-                      disabled={deleteMut.isPending}
-                    >
-                      Remove
-                    </Button>
-                  </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {places.map((p: any) => (
+            <div key={p.id} className="border rounded overflow-hidden">
+              <div
+                className="aspect-video bg-muted"
+                style={{ backgroundImage: `url(${p.imageUrl})`, backgroundSize: 'cover' }}
+              />
+              <div className="p-3 space-y-1">
+                <div className="font-medium">{p.name}</div>
+                <div className="text-xs text-muted-foreground line-clamp-2">{p.shortDescription}</div>
+                <div className="text-xs text-muted-foreground">Avg check: ${p.averageCheckUSD}</div>
+                <div className="flex gap-2 pt-2">
+                  <a href={p.googleMapsUrl} target="_blank" rel="noreferrer" className="text-xs underline">
+                    Map
+                  </a>
+                  <Link to={'/itineraries/$id'} params={{ id: 'yerevan-1day' }} className="text-xs underline">
+                    View sample itinerary
+                  </Link>
+                </div>
+                <div className="pt-2">
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    onClick={() => removePlace({ id: p.id })}
+                    disabled={isDeleting}
+                  >
+                    Remove
+                  </Button>
                 </div>
               </div>
-            ))}
-          </div>
-        )}
+            </div>
+          ))}
+        </div>
       </Card>
 
       <Card className="p-4 space-y-3">
@@ -168,7 +143,7 @@ function PlacesPage() {
             <Label htmlFor="factSnippet">Fact Snippet</Label>
             <Input id="factSnippet" name="factSnippet" placeholder="Fun fact" />
           </div>
-          <Button type="submit" disabled={createMut.isPending}>
+          <Button type="submit" disabled={isCreating}>
             Add place
           </Button>
         </form>

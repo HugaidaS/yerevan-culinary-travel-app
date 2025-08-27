@@ -8,8 +8,6 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createServerRootRoute } from '@tanstack/react-start/server'
-
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as DemoRouteRouteImport } from './routes/demo/route'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
@@ -26,15 +24,6 @@ import { Route as AdminItinerariesRouteImport } from './routes/admin/itineraries
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
 import { Route as DemoSentryTestingRouteImport } from './routes/demo/sentry.testing'
-import { ServerRoute as ApiTagsServerRouteImport } from './routes/api/tags'
-import { ServerRoute as ApiPlacesServerRouteImport } from './routes/api/places'
-import { ServerRoute as ApiMealTypesServerRouteImport } from './routes/api/meal-types'
-import { ServerRoute as ApiItinerariesServerRouteImport } from './routes/api/itineraries'
-import { ServerRoute as ApiDemoNamesServerRouteImport } from './routes/api/demo-names'
-import { ServerRoute as ApiPlaceIdServerRouteImport } from './routes/api/place.$id'
-import { ServerRoute as ApiItineraryIdServerRouteImport } from './routes/api/itinerary.$id'
-
-const rootServerRouteImport = createServerRootRoute()
 
 const DemoRouteRoute = DemoRouteRouteImport.update({
   id: '/demo',
@@ -110,41 +99,6 @@ const DemoSentryTestingRoute = DemoSentryTestingRouteImport.update({
   id: '/sentry/testing',
   path: '/sentry/testing',
   getParentRoute: () => DemoRouteRoute,
-} as any)
-const ApiTagsServerRoute = ApiTagsServerRouteImport.update({
-  id: '/api/tags',
-  path: '/api/tags',
-  getParentRoute: () => rootServerRouteImport,
-} as any)
-const ApiPlacesServerRoute = ApiPlacesServerRouteImport.update({
-  id: '/api/places',
-  path: '/api/places',
-  getParentRoute: () => rootServerRouteImport,
-} as any)
-const ApiMealTypesServerRoute = ApiMealTypesServerRouteImport.update({
-  id: '/api/meal-types',
-  path: '/api/meal-types',
-  getParentRoute: () => rootServerRouteImport,
-} as any)
-const ApiItinerariesServerRoute = ApiItinerariesServerRouteImport.update({
-  id: '/api/itineraries',
-  path: '/api/itineraries',
-  getParentRoute: () => rootServerRouteImport,
-} as any)
-const ApiDemoNamesServerRoute = ApiDemoNamesServerRouteImport.update({
-  id: '/api/demo-names',
-  path: '/api/demo-names',
-  getParentRoute: () => rootServerRouteImport,
-} as any)
-const ApiPlaceIdServerRoute = ApiPlaceIdServerRouteImport.update({
-  id: '/api/place/$id',
-  path: '/api/place/$id',
-  getParentRoute: () => rootServerRouteImport,
-} as any)
-const ApiItineraryIdServerRoute = ApiItineraryIdServerRouteImport.update({
-  id: '/api/itinerary/$id',
-  path: '/api/itinerary/$id',
-  getParentRoute: () => rootServerRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -254,73 +208,6 @@ export interface RootRouteChildren {
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
   DemoRouteRoute: typeof DemoRouteRouteWithChildren
   ItinerariesIdRoute: typeof ItinerariesIdRoute
-}
-export interface FileServerRoutesByFullPath {
-  '/api/demo-names': typeof ApiDemoNamesServerRoute
-  '/api/itineraries': typeof ApiItinerariesServerRoute
-  '/api/meal-types': typeof ApiMealTypesServerRoute
-  '/api/places': typeof ApiPlacesServerRoute
-  '/api/tags': typeof ApiTagsServerRoute
-  '/api/itinerary/$id': typeof ApiItineraryIdServerRoute
-  '/api/place/$id': typeof ApiPlaceIdServerRoute
-}
-export interface FileServerRoutesByTo {
-  '/api/demo-names': typeof ApiDemoNamesServerRoute
-  '/api/itineraries': typeof ApiItinerariesServerRoute
-  '/api/meal-types': typeof ApiMealTypesServerRoute
-  '/api/places': typeof ApiPlacesServerRoute
-  '/api/tags': typeof ApiTagsServerRoute
-  '/api/itinerary/$id': typeof ApiItineraryIdServerRoute
-  '/api/place/$id': typeof ApiPlaceIdServerRoute
-}
-export interface FileServerRoutesById {
-  __root__: typeof rootServerRouteImport
-  '/api/demo-names': typeof ApiDemoNamesServerRoute
-  '/api/itineraries': typeof ApiItinerariesServerRoute
-  '/api/meal-types': typeof ApiMealTypesServerRoute
-  '/api/places': typeof ApiPlacesServerRoute
-  '/api/tags': typeof ApiTagsServerRoute
-  '/api/itinerary/$id': typeof ApiItineraryIdServerRoute
-  '/api/place/$id': typeof ApiPlaceIdServerRoute
-}
-export interface FileServerRouteTypes {
-  fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths:
-    | '/api/demo-names'
-    | '/api/itineraries'
-    | '/api/meal-types'
-    | '/api/places'
-    | '/api/tags'
-    | '/api/itinerary/$id'
-    | '/api/place/$id'
-  fileServerRoutesByTo: FileServerRoutesByTo
-  to:
-    | '/api/demo-names'
-    | '/api/itineraries'
-    | '/api/meal-types'
-    | '/api/places'
-    | '/api/tags'
-    | '/api/itinerary/$id'
-    | '/api/place/$id'
-  id:
-    | '__root__'
-    | '/api/demo-names'
-    | '/api/itineraries'
-    | '/api/meal-types'
-    | '/api/places'
-    | '/api/tags'
-    | '/api/itinerary/$id'
-    | '/api/place/$id'
-  fileServerRoutesById: FileServerRoutesById
-}
-export interface RootServerRouteChildren {
-  ApiDemoNamesServerRoute: typeof ApiDemoNamesServerRoute
-  ApiItinerariesServerRoute: typeof ApiItinerariesServerRoute
-  ApiMealTypesServerRoute: typeof ApiMealTypesServerRoute
-  ApiPlacesServerRoute: typeof ApiPlacesServerRoute
-  ApiTagsServerRoute: typeof ApiTagsServerRoute
-  ApiItineraryIdServerRoute: typeof ApiItineraryIdServerRoute
-  ApiPlaceIdServerRoute: typeof ApiPlaceIdServerRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -432,59 +319,6 @@ declare module '@tanstack/react-router' {
     }
   }
 }
-declare module '@tanstack/react-start/server' {
-  interface ServerFileRoutesByPath {
-    '/api/tags': {
-      id: '/api/tags'
-      path: '/api/tags'
-      fullPath: '/api/tags'
-      preLoaderRoute: typeof ApiTagsServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
-    '/api/places': {
-      id: '/api/places'
-      path: '/api/places'
-      fullPath: '/api/places'
-      preLoaderRoute: typeof ApiPlacesServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
-    '/api/meal-types': {
-      id: '/api/meal-types'
-      path: '/api/meal-types'
-      fullPath: '/api/meal-types'
-      preLoaderRoute: typeof ApiMealTypesServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
-    '/api/itineraries': {
-      id: '/api/itineraries'
-      path: '/api/itineraries'
-      fullPath: '/api/itineraries'
-      preLoaderRoute: typeof ApiItinerariesServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
-    '/api/demo-names': {
-      id: '/api/demo-names'
-      path: '/api/demo-names'
-      fullPath: '/api/demo-names'
-      preLoaderRoute: typeof ApiDemoNamesServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
-    '/api/place/$id': {
-      id: '/api/place/$id'
-      path: '/api/place/$id'
-      fullPath: '/api/place/$id'
-      preLoaderRoute: typeof ApiPlaceIdServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
-    '/api/itinerary/$id': {
-      id: '/api/itinerary/$id'
-      path: '/api/itinerary/$id'
-      fullPath: '/api/itinerary/$id'
-      preLoaderRoute: typeof ApiItineraryIdServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
-  }
-}
 
 interface AdminRouteRouteChildren {
   AdminItinerariesRoute: typeof AdminItinerariesRoute
@@ -537,15 +371,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-const rootServerRouteChildren: RootServerRouteChildren = {
-  ApiDemoNamesServerRoute: ApiDemoNamesServerRoute,
-  ApiItinerariesServerRoute: ApiItinerariesServerRoute,
-  ApiMealTypesServerRoute: ApiMealTypesServerRoute,
-  ApiPlacesServerRoute: ApiPlacesServerRoute,
-  ApiTagsServerRoute: ApiTagsServerRoute,
-  ApiItineraryIdServerRoute: ApiItineraryIdServerRoute,
-  ApiPlaceIdServerRoute: ApiPlaceIdServerRoute,
-}
-export const serverRouteTree = rootServerRouteImport
-  ._addFileChildren(rootServerRouteChildren)
-  ._addFileTypes<FileServerRouteTypes>()

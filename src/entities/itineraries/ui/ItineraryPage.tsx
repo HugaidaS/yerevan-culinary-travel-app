@@ -2,7 +2,9 @@ import { Suspense, lazy, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { ArrowLeft, Coffee, Cookie, Info, MapPin, Printer, Utensils, Wine } from 'lucide-react'
 import { ImageWithFallback } from './ImageWithFallback'
-import type { ItineraryWithDetails, MapLocation } from '@/shared/types'
+import type { api } from '../../../../convex/_generated/api'
+import type { MapLocation } from '@/shared/types'
+import type { FunctionReturnType } from 'convex/server'
 import { env } from '@/env'
 import { Badge, Button, Card } from '@/shared/ui'
 import {
@@ -17,17 +19,19 @@ import {
 
 const GoogleMap = lazy(() => import('./GoogleMap'))
 
-interface ItineraryPageProps {
-  itinerary: ItineraryWithDetails
-}
+type ConvexItineraryWithDetails = FunctionReturnType<typeof api.itineraries.getById>
 
-// helpers moved to '@/entities/itineraries/utils'
+interface ItineraryPageProps {
+  itinerary: ConvexItineraryWithDetails
+}
 
 export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
   const navigate = useNavigate()
   const [selectedDay, setSelectedDay] = useState(1)
   const [isPrintView, setIsPrintView] = useState(false)
   const [isClient, setIsClient] = useState(false)
+
+  if (!itinerary) return <div className="p-6">Itinerary not found.</div>
 
   useEffect(() => {
     setIsClient(true)
@@ -44,6 +48,9 @@ export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
       const yerevanBounds = { minLat: 40.08, maxLat: 40.25, minLng: 44.4, maxLng: 44.63 }
       for (const meal of currentDay.meals) {
         const place = meal.place
+
+        if (!place) continue
+
         // Prefer parsed coords from Google URL if present; else normalize stored lat/lng
         const parsed = parseCoordsFromGoogleUrl(place.googleMapsUrl)
         const normalized = parsed ?? normalizeLatLngWithRegion(place.lat, place.lng, yerevanBounds)
@@ -139,9 +146,9 @@ export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
 
                 {/* Other tags */}
                 {tags.map((tag: any) => {
-                  const Icon = getTagIcon(tag.name)
+                  const Icon = getTagIcon(tag.id)
                   return (
-                    <Badge key={tag.id} variant="outline" className={`${getTagColor(tag.name)} text-xs`}>
+                    <Badge key={tag.id} variant="outline" className={`${getTagColor(tag.id)} text-xs`}>
                       <Icon className="w-3 h-3 mr-1" />
                       {tag.name.replace(/([A-Z])/g, ' $1').trim()}
                     </Badge>

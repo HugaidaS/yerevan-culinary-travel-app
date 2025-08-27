@@ -1,9 +1,4 @@
-import {
-  HeadContent,
-  Outlet,
-  Scripts,
-  createRootRouteWithContext,
-} from '@tanstack/react-router'
+import { HeadContent, Outlet, Scripts, createRootRouteWithContext } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 
 import { wrapCreateRootRouteWithSentry } from '@sentry/tanstackstart-react'
@@ -18,9 +13,7 @@ interface MyRouterContext {
   queryClient: QueryClient
 }
 
-export const Route = wrapCreateRootRouteWithSentry(
-  createRootRouteWithContext,
-)<MyRouterContext>()({
+export const Route = wrapCreateRootRouteWithSentry(createRootRouteWithContext)<MyRouterContext>()({
   head: () => ({
     meta: [
       {
@@ -57,10 +50,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
-        <script
-          src="https://flackr.github.io/scroll-timeline/dist/scroll-timeline.js"
-          async
-        ></script>
+        <script src="https://flackr.github.io/scroll-timeline/dist/scroll-timeline.js" async></script>
       </head>
       <body>
         {children}

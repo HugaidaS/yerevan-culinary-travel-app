@@ -1,7 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query'
+import { convexQuery, useConvexMutation } from '@convex-dev/react-query'
 import * as React from 'react'
-import type { ApiResponse, Itinerary, MealType, Place, Tag } from '@/shared/types.ts'
+import { api } from '../../../convex/_generated/api'
+import type { Itinerary } from '@/shared/types.ts'
 import { Button, Card, Input, Label, Textarea } from '@/shared/ui'
 
 export const Route = createFileRoute('/admin/itineraries')({
@@ -9,73 +11,14 @@ export const Route = createFileRoute('/admin/itineraries')({
 })
 
 function ItinerariesPage() {
-  const qc = useQueryClient()
-  const { data, isLoading } = useQuery({
-    queryKey: ['admin', 'itineraries'],
-    queryFn: async () => {
-      const res = await fetch('/api/itineraries')
-      return (await res.json()) as ApiResponse<Array<Itinerary>>
-    },
-  })
+  const { data: itineraries } = useSuspenseQuery(convexQuery(api.itineraries.getAll, {}))
+  const { data: places } = useSuspenseQuery(convexQuery(api.places.getAll, {}))
+  const { data: mealTypes } = useSuspenseQuery(convexQuery(api.mealTypes.getAll, {}))
 
-  const { data: placesData } = useQuery({
-    queryKey: ['admin', 'places'],
-    queryFn: async () => {
-      const res = await fetch('/api/places')
-      return (await res.json()) as ApiResponse<Array<Place>>
-    },
-  })
-
-  const { data: mealTypesData } = useQuery({
-    queryKey: ['admin', 'meal-types'],
-    queryFn: async () => {
-      const res = await fetch('/api/meal-types')
-      return (await res.json()) as ApiResponse<Array<MealType>>
-    },
-  })
-
-  const { data: tagsData } = useQuery({
-    queryKey: ['admin', 'tags'],
-    queryFn: async () => {
-      const res = await fetch('/api/tags')
-      return (await res.json()) as ApiResponse<Array<Tag>>
-    },
-  })
-
-  const deleteMut = useMutation({
-    mutationFn: async (id: string) => {
-      const res = await fetch('/api/itineraries', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id }),
-      })
-      return (await res.json()) as ApiResponse<boolean>
-    },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['admin', 'itineraries'] }),
-  })
-
-  const createMut = useMutation({
-    mutationFn: async (it: Itinerary) => {
-      const res = await fetch('/api/itineraries', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(it),
-      })
-      return (await res.json()) as ApiResponse<Itinerary>
-    },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['admin', 'itineraries'] }),
-  })
-
-  const patchMut = useMutation({
-    mutationFn: async (it: Itinerary) => {
-      const res = await fetch('/api/itineraries', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(it),
-      })
-      return (await res.json()) as ApiResponse<Itinerary>
-    },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['admin', 'itineraries'] }),
+  const { mutate: createItinerary } = useMutation({ mutationFn: useConvexMutation(api.itineraries.create) })
+  const { mutate: updateItinerary } = useMutation({ mutationFn: useConvexMutation(api.itineraries.update) })
+  const { mutate: removeItinerary, isPending: isRemoving } = useMutation({
+    mutationFn: useConvexMutation(api.itineraries.remove),
   })
 
   // Builder state
@@ -169,9 +112,11 @@ function ItinerariesPage() {
     const it = buildItinerary()
     if (!it) return
     if (editingId) {
-      patchMut.mutate(it, { onSuccess: resetForm })
+      updateItinerary(it)
+      resetForm()
     } else {
-      createMut.mutate(it, { onSuccess: resetForm })
+      createItinerary(it)
+      resetForm()
     }
   }
 
@@ -182,34 +127,31 @@ function ItinerariesPage() {
       </div>
 
       <Card className="p-4 space-y-3">
-        {isLoading && <div>Loading...</div>}
-        {!isLoading && (
-          <div className="grid gap-3">
-            {data?.data.map((i) => (
-              <div key={i.id} className="flex items-center justify-between border rounded px-3 py-2">
-                <div>
-                  <div className="font-medium">{i.name}</div>
-                  <div className="text-xs text-muted-foreground">
-                    {i.days} days • {i.id}
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Button size="sm" variant="secondary" onClick={() => loadForEdit(i)}>
-                    Edit
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    onClick={() => deleteMut.mutate(i.id)}
-                    disabled={deleteMut.isPending}
-                  >
-                    Remove
-                  </Button>
+        <div className="grid gap-3">
+          {itineraries.map((i: any) => (
+            <div key={i.id} className="flex items-center justify-between border rounded px-3 py-2">
+              <div>
+                <div className="font-medium">{i.name}</div>
+                <div className="text-xs text-muted-foreground">
+                  {i.days} days • {i.id}
                 </div>
               </div>
-            ))}
-          </div>
-        )}
+              <div className="flex items-center gap-2">
+                <Button size="sm" variant="secondary" onClick={() => loadForEdit(i)}>
+                  Edit
+                </Button>
+                <Button
+                  size="sm"
+                  variant="destructive"
+                  onClick={() => removeItinerary({ id: i.id })}
+                  disabled={isRemoving}
+                >
+                  Remove
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
       </Card>
 
       <Card className="p-4 space-y-4">
@@ -267,7 +209,7 @@ function ItinerariesPage() {
                           onChange={(e) => handleChangeMeal(dayIdx, mealIdx, 'mealTypeId', e.target.value)}
                         >
                           <option value="">Select meal type</option>
-                          {mealTypesData?.data?.map((mt) => (
+                          {mealTypes.map((mt: any) => (
                             <option key={mt.id} value={mt.id}>
                               {mt.name}
                             </option>
@@ -282,7 +224,7 @@ function ItinerariesPage() {
                           onChange={(e) => handleChangeMeal(dayIdx, mealIdx, 'placeId', e.target.value)}
                         >
                           <option value="">Select place</option>
-                          {placesData?.data?.map((p) => (
+                          {places.map((p: any) => (
                             <option key={p.id} value={p.id}>
                               {p.name}
                             </option>
@@ -311,17 +253,12 @@ function ItinerariesPage() {
           </div>
 
           <div className="flex gap-2">
-            <Button type="submit" disabled={createMut.isPending || patchMut.isPending}>
-              {editingId ? 'Save itinerary' : 'Create itinerary'}
-            </Button>
+            <Button type="submit">{editingId ? 'Save itinerary' : 'Create itinerary'}</Button>
             <Button type="button" variant="secondary" onClick={resetForm}>
               Reset
             </Button>
           </div>
         </form>
-        <div className="text-xs text-muted-foreground">
-          Tip: We can add filters by tags later. Tags loaded: {tagsData?.data?.length ?? 0}
-        </div>
       </Card>
     </div>
   )

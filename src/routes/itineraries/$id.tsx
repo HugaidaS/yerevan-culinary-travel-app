@@ -1,29 +1,20 @@
-import { createFileRoute, notFound } from '@tanstack/react-router'
-import type { ItineraryWithDetails } from '@/shared/types.ts'
+import { createFileRoute } from '@tanstack/react-router'
+import { convexQuery } from '@convex-dev/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { api } from '../../../convex/_generated/api'
+import type { FunctionReturnType } from 'convex/server'
 import { ItineraryPage } from '@/entities/itineraries/ui'
 
-async function getItinerary(params: { id: string }): Promise<{
-  data: ItineraryWithDetails
-}> {
-  const res = await fetch(`/api/itinerary/${params.id}`)
-
-  if (!res.ok) {
-    throw notFound()
-  }
-
-  return await res.json()
-}
+type ConvexItineraryWithDetails = FunctionReturnType<typeof api.itineraries.getById>
 
 export const Route = createFileRoute('/itineraries/$id')({
-  loader: ({ params }) =>
-    getItinerary({
-      id: params.id,
-    }),
   component: Itinerary,
 })
 
 function Itinerary() {
-  const { data: itinerary } = Route.useLoaderData()
+  const { id } = Route.useParams()
+  const { data: itinerary } = useSuspenseQuery(convexQuery(api.itineraries.getById, { id }))
 
-  return <ItineraryPage itinerary={itinerary} />
+  if (!itinerary) return <div className="p-6">Itinerary not found.</div>
+  return <ItineraryPage itinerary={itinerary as ConvexItineraryWithDetails} />
 }

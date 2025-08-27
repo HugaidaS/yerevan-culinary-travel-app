@@ -1,36 +1,43 @@
-import { createRouter as createTanstackRouter } from '@tanstack/react-router'
+import { createRouter as createTanStackRouter } from '@tanstack/react-router'
+import { QueryClient } from '@tanstack/react-query'
 import { routerWithQueryClient } from '@tanstack/react-router-with-query'
+import { ConvexQueryClient } from '@convex-dev/react-query'
+import { ConvexProvider } from 'convex/react'
 import { routeTree } from './routeTree.gen'
 
 // Import the generated route tree
 import './styles.css'
-import {
-  TanStackQueryProvider,
-  getContext,
-} from '@/shared/integrations/tanstack-query'
 
-// Create a new router instance
-export const createRouter = () => {
-  const rqContext = getContext()
+export function createRouter() {
+  const CONVEX_URL = (import.meta as any).env.VITE_CONVEX_URL!
+  if (!CONVEX_URL) {
+    console.error('missing envar VITE_CONVEX_URL')
+  }
+  const convexQueryClient = new ConvexQueryClient(CONVEX_URL)
 
-  return routerWithQueryClient(
-    createTanstackRouter({
-      routeTree,
-      context: { ...rqContext },
-      defaultPreload: 'intent',
-      Wrap: (props: { children: React.ReactNode }) => {
-        return (
-          <TanStackQueryProvider {...rqContext}>
-            {props.children}
-          </TanStackQueryProvider>
-        )
+  const queryClient: QueryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        queryKeyHashFn: convexQueryClient.hashFn(),
+        queryFn: convexQueryClient.queryFn(),
       },
+    },
+  })
+  convexQueryClient.connect(queryClient)
+
+  const router = routerWithQueryClient(
+    createTanStackRouter({
+      routeTree,
+      defaultPreload: 'intent',
+      context: { queryClient },
+      Wrap: ({ children }) => <ConvexProvider client={convexQueryClient.convexClient}>{children}</ConvexProvider>,
     }),
-    rqContext.queryClient,
+    queryClient,
   )
+
+  return router
 }
 
-// Register the router instance for type safety
 declare module '@tanstack/react-router' {
   interface Register {
     router: ReturnType<typeof createRouter>

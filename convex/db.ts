@@ -1,5 +1,5 @@
 // lib/database/mock-data.ts
-import type { Itinerary, MealType, Place, Tag } from '@/shared/types.ts'
+import type { Itinerary, MealType, Place, Tag } from '../src/shared/types'
 
 export const tags: Array<Tag> = [
   { id: 'coffee', name: 'Coffee' },
