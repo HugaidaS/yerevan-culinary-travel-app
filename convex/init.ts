@@ -36,6 +36,7 @@ export default internalMutation(async (ctx) => {
       name: p.name,
       lat: p.lat,
       lng: p.lng,
+      address: p.address,
       shortDescription: p.shortDescription,
       longDescription: p.longDescription,
       factSnippet: p.factSnippet,

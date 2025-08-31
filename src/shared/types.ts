@@ -3,6 +3,7 @@ export interface Place {
   name: string
   lat: number
   lng: number
+  address: string
   shortDescription: string
   longDescription: string
   factSnippet: string

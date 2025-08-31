@@ -24,7 +24,10 @@ export const env = createEnv({
    * `process.env` or `import.meta.env`.
    */
   // Make server vars available when running on the server. Client vars still come from import.meta.env
-  runtimeEnv: {},
+  runtimeEnv: {
+    ...process.env,
+    ...((typeof import.meta !== 'undefined' ? import.meta.env : {}) as any),
+  },
 
   /**
    * By default, this library will feed the environment variables directly to

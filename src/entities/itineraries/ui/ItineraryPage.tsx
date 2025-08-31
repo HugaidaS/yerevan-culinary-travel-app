@@ -1,11 +1,10 @@
-import { Suspense, lazy, useEffect, useMemo, useState } from 'react'
+import { Suspense, lazy, useMemo, useState } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { ArrowLeft, Coffee, Cookie, Info, MapPin, Printer, Utensils, Wine } from 'lucide-react'
 import { ImageWithFallback } from './ImageWithFallback'
 import type { api } from '../../../../convex/_generated/api'
 import type { MapLocation } from '@/shared/types'
 import type { FunctionReturnType } from 'convex/server'
-import { env } from '@/env'
 import { Badge, Button, Card } from '@/shared/ui'
 import {
   getMealTypeBorderColor,
@@ -28,15 +27,8 @@ interface ItineraryPageProps {
 export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
   const navigate = useNavigate()
   const [selectedDay, setSelectedDay] = useState(1)
-  const [isPrintView, setIsPrintView] = useState(false)
-  const [isClient, setIsClient] = useState(false)
 
   if (!itinerary) return <div className="p-6">Itinerary not found.</div>
-
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
-
   const currentDay = itinerary.schedule.find((day) => day.dayNumber === selectedDay)
 
   // Create map locations in the exact format your MapComponent expects
@@ -69,12 +61,61 @@ export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
     return locations
   }, [currentDay])
 
-  const handlePrint = () => {
-    setIsPrintView(true)
-    setTimeout(() => {
-      window.print()
-      setIsPrintView(false)
-    }, 100)
+  const handlePrint = async () => {
+    const htmlContent = `
+      <div style="font-family:Arial,sans-serif;padding:24px;max-width:700px;">
+        <h1 style="margin-bottom:8px;">${itinerary.name}</h1>
+        ${itinerary.description ? `<p style='margin-bottom:16px;'>${itinerary.description}</p>` : ''}
+        ${itinerary.schedule
+          .map(
+            (day) => `
+          <div style='margin-bottom:18px;'>
+            <h1 style='font-size:2rem;margin-bottom:16px;'>Day ${day.dayNumber}</h1>
+            ${day.meals
+              .map(
+                (meal) => `
+              <div style='margin-bottom:18px;'> 
+                <div style="font-size:1.15rem; font-weight: bold;"> 
+                 ${meal.mealType?.name}: ${meal.place?.name || 'Unknown Place'} ${meal.place?.shortDescription ? `<span> — ${meal.place.shortDescription}</span>` : ''}
+                </div>
+                
+                <div style="margin-top: 8px; font-style: italic; font-weight: bold">${meal.place?.address}</div>
+                
+                <div style="margin-top: 8px">${meal.place?.longDescription}</div>
+                
+                 <div style="margin-top: 8px">${meal.place?.factSnippet}</div>
+              </div>
+            `,
+              )
+              .join('')}
+          </div>
+        `,
+          )
+          .join('')}
+      </div>
+    `
+
+    const response = await fetch('/api/pdf', {
+      method: 'POST',
+      body: JSON.stringify({ htmlContent }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    if (response.ok) {
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = 'Itinerary.pdf'
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      console.log('PDF downloaded successfully')
+    } else {
+      console.error('Failed to generate PDF')
+    }
   }
 
   const handleBack = () => {
@@ -184,6 +225,14 @@ export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
                     {place.factSnippet}
                   </div>
                 )}
+
+                {/*  Address */}
+                {place.address && (
+                  <div className="mt-3 text-sm text-muted-foreground flex items-center gap-2">
+                    <MapPin className="w-4 h-4 opacity-70" />
+                    <span>{place.address}</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -245,24 +294,6 @@ export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
     </div>
   )
 
-  if (isPrintView) {
-    return (
-      <div className="min-h-screen bg-white print:bg-white text-black print:text-black p-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl mb-2">Armenian Food Itinerary</h1>
-            <h2 className="text-xl text-gray-600">{itinerary.name}</h2>
-            <p className="text-gray-500">
-              {itinerary.days} Day{itinerary.days > 1 ? 's' : ''} Experience
-            </p>
-          </div>
-
-          {itinerary.schedule.map((day) => renderDay(day))}
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -283,7 +314,7 @@ export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
 
           <Button variant="armenian" size="sm" onClick={handlePrint} className="print:hidden">
             <Printer className="w-4 h-4 mr-2" />
-            Print
+            Save as PDF
           </Button>
         </div>
       </header>
@@ -330,11 +361,11 @@ export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
           <div className="col-span-1 min-[1120px]:col-span-5">
             <div className="min-[1120px]:sticky min-[1120px]:top-24 print:hidden">
               <Card className="p-0 overflow-hidden">
-                <div className="p-4 pb-3 border-b border-border/20">
+                <div className="p-4 border-b border-border/20">
                   <h3 className="text-lg">Today's Locations</h3>
                 </div>
-                <div className="bg-background min-[1120px]:h-[calc(100vh-8rem)] min-h-[320px] min-[1120px]:min-h-[420px]">
-                  {env.VITE_GOOGLE_MAPS_API_KEY && isClient ? (
+                <div className="bg-background h-[82dvh]">
+                  {import.meta.env.VITE_GOOGLE_MAPS_API_KEY ? (
                     <Suspense fallback={<div className="w-full h-full bg-muted" />}>
                       <GoogleMap locations={mapLocations} />
                     </Suspense>

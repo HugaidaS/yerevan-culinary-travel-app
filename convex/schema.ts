@@ -20,6 +20,7 @@ export default defineSchema({
     name: v.string(),
     lat: v.number(),
     lng: v.number(),
+    address: v.string(),
     shortDescription: v.string(),
     longDescription: v.string(),
     factSnippet: v.string(),

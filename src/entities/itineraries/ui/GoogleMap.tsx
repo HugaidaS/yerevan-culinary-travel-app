@@ -16,6 +16,7 @@ export default function GoogleMap({ locations }: GoogleMapProps) {
 
   useEffect(() => {
     const apiKey = env.VITE_GOOGLE_MAPS_API_KEY
+
     if (!apiKey) return
 
     const loader = new Loader({
@@ -81,12 +82,17 @@ export default function GoogleMap({ locations }: GoogleMapProps) {
           if (!infoWindowRef.current) return
           const content = `
 						<div style="max-width:240px">
-							<div style="font-weight:600;margin-bottom:4px">${loc.name}</div>
-							<div style="font-size:12px;color:#555;margin-bottom:6px">${loc.description || ''}</div>
+							<div style="font-size:15px;color:#555;margin-bottom:10px">${loc.description || ''}</div>
 							${loc.googleMapsUrl ? `<a href="${loc.googleMapsUrl}" target="_blank" rel="noopener" style="color:#c14242;font-weight:600">Open in Google Maps</a>` : ''}
 						</div>
 					`
+
+          const header: Element = document.createElement('article')
+          header.className = 'font-semibold mb-1'
+          header.textContent = loc.name
+
           infoWindowRef.current.setContent(content)
+          infoWindowRef.current.setHeaderContent(header)
           infoWindowRef.current.open({ map: mapRef.current!, anchor: marker })
         })
         markersRef.current.push(marker)

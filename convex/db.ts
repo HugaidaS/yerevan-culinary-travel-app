@@ -28,6 +28,7 @@ export const places: Array<Place> = [
     name: 'Afrolab Roastery',
     lat: 40.1826266,
     lng: 44.512941,
+    address: '40 Pushkin St, Yerevan 0010',
     shortDescription: 'Specialty coffee roastery with bright, modern vibe.',
     longDescription:
       "Afrolab is one of Yerevan's first specialty coffee roasters, sourcing award-winning beans from around the world. The tropical-chic interior is filled with the aroma of freshly ground coffee. A perfect spot to start the day with a cappuccino or pour-over while soaking in Armenia's new-wave café culture.",
@@ -44,6 +45,7 @@ export const places: Array<Place> = [
     name: 'Lumen Coffee 1936',
     lat: 40.190212,
     lng: 44.5184034,
+    address: '45 Mesrop Mashtots Ave, Yerevan 0002',
     shortDescription: 'Minimalist espresso bar with world-class brews.',
     longDescription:
       "Lumen Coffee is run by passionate local baristas on a mission to elevate coffee culture. Known for meticulous espresso shots and hand-brewed single origins, it's a cozy yet stylish space perfect for a focused morning or mid-day recharge.",
@@ -60,6 +62,7 @@ export const places: Array<Place> = [
     name: 'Sloyonka Gastro Bakery & Coffee',
     lat: 40.1888302,
     lng: 44.5175321,
+    address: '48 Mesrop Mashtots Ave, Yerevan 0002',
     shortDescription: 'Layered pastries, croissants, and fresh coffee.',
     longDescription:
       "Sloyonka ('puff pastry' in Russian) is famous for its buttery croissants, flaky nazook, and modern coffee drinks. The atmosphere blends the charm of a bakery with the buzz of a downtown hangout, attracting locals and travelers alike.",
@@ -76,6 +79,7 @@ export const places: Array<Place> = [
     name: 'Lavash Restaurant',
     lat: 40.1830853,
     lng: 44.5161934,
+    address: '21 Tumanyan St, Yerevan 0001',
     shortDescription: 'Stylish Armenian spot; fresh lavash & kyufta.',
     longDescription:
       'Lavash bakes the UNESCO-listed flatbread fresh in a clay tonir, right before your eyes. Their kyufta—hand-pounded veal mixed with bulgur—is tender and flavorful, served with herbs and broth. Breakfasts include eggs with basturma and seasonal jams.',
@@ -91,6 +95,7 @@ export const places: Array<Place> = [
     name: 'OST Food & Wine',
     lat: 40.1859989,
     lng: 44.5073331,
+    address: '16 Martiros Saryan St, Yerevan 0002',
     shortDescription: 'Beloved wood-fired lahmajo (Armenian pizza).',
     longDescription:
       'OST is a no-frills spot beloved for lahmajo hot from the wood-fired oven. Thin, spiced meat topping on crisp bread—best with a cold tan. Watch the bakers stretch and fire each order within minutes.',
@@ -107,6 +112,7 @@ export const places: Array<Place> = [
     name: 'Tumanyan Shaurma',
     lat: 40.1831817,
     lng: 44.5165953,
+    address: '32, 36 Tumanyan St, Yerevan 0001',
     shortDescription: 'Local institution for Armenian-style shawarma.',
     longDescription:
       'Juicy chicken or pork shaved fresh from the spit, wrapped in lavash with tangy pickles and garlic sauce. Grab one and eat like a true Yerevantsi—fast, satisfying, and always fresh.',
@@ -123,13 +129,14 @@ export const places: Array<Place> = [
     name: 'Grand Candy Ponchikanots',
     lat: 40.1902272,
     lng: 44.5190332,
+    address: '54/92-93, Mesrop Mashtots Ave, Yerevan 0009',
     shortDescription: 'Iconic custard-filled ponchik donuts.',
     longDescription:
       "Grand Candy's Ponchikanots is a nostalgic sweet paradise. Their ponchik—golden, airy donuts bursting with custard or chocolate—are best enjoyed warm with cocoa. A whimsical spot loved across generations.",
     factSnippet:
       'Ponchik, the beloved fried donut, became a staple snack in Soviet-era bakeries, making it a nostalgic treat for many Armenians.',
     averageCheckUSD: 4,
-    googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Grand+Candy+Ponchikanots+Yerevan',
+    googleMapsUrl: 'https://maps.app.goo.gl/gKDbXobJk5jEEf8y5',
     imageUrl: 'https://avatars.mds.yandex.net/get-altay/13477341/2a0000018fa07c716b8d328a25f113342982/XXXL',
     tagIds: ['sweets'],
     mealTypeIds: ['snack'],
@@ -139,6 +146,7 @@ export const places: Array<Place> = [
     name: 'Rubicone Gelato Boutique',
     lat: 40.1849177,
     lng: 44.5207167,
+    address: '30 Abovyan St, Yerevan 0010',
     shortDescription: 'Artisanal gelato with Armenian flavors.',
     longDescription:
       'Rubicone crafts small-batch gelato with Italian methods and Armenian soul. Expect seasonal flavors like apricot, mulberry, or thyme-honey—perfect for a sunny stroll.',
@@ -155,6 +163,7 @@ export const places: Array<Place> = [
     name: 'Black Angus',
     lat: 40.1884531,
     lng: 44.5162799,
+    address: '9, 39 Mesrop Mashtots Ave, Yerevan 0002',
     shortDescription: 'Burger chain with premium Angus beef.',
     longDescription:
       'Black Angus delivers hearty burgers made from quality Angus beef. A casual, reliable choice when you need a break from traditional Armenian meals without sacrificing flavor.',
@@ -171,6 +180,7 @@ export const places: Array<Place> = [
     name: 'Nani National Streetfood',
     lat: 40.1827194,
     lng: 44.5165519,
+    address: '19, 36 Tumanyan St, Yerevan 0001',
     shortDescription: 'Armenian classics turned into handheld streetfood.',
     longDescription:
       'Nani reimagines national dishes for the street: dolma in bread, salads in ciabatta, and other creative takes on traditional flavors. Fun, tasty, and portable.',
@@ -187,6 +197,7 @@ export const places: Array<Place> = [
     name: 'Abovyan 12 (Courtyard Café & Gallery)',
     lat: 40.180898,
     lng: 44.5159627,
+    address: '12 Abovyan St, Yerevan 0010',
     shortDescription: 'Hidden courtyard via souvenir shop; magical at night.',
     longDescription:
       "Enter through the Dalan Art Gallery souvenir shop, next to a handmade chocolate & pomegranate wine store, and you'll find this charming courtyard café. Ideal for tea, salads, or grilled meats, with a gallery upstairs and evening fairy lights.",
@@ -203,6 +214,7 @@ export const places: Array<Place> = [
     name: 'Tavern Yerevan',
     lat: 40.1789456,
     lng: 44.5099982,
+    address: '5 Amiryan St, Yerevan 0010',
     shortDescription: 'Lively Armenian tavern with khorovats & music.',
     longDescription:
       'Tavern Yerevan is all about hearty khorovats, dolma, and fresh lavash, served with live folk music in a bustling atmosphere. A quintessential Armenian dining experience.',
@@ -219,6 +231,7 @@ export const places: Array<Place> = [
     name: 'Artashi Mot BBQ',
     lat: 40.1750376,
     lng: 44.5093087,
+    address: '20 Movses Khorenatsi Street, Yerevan 0018',
     shortDescription: 'Old-school khorovats with smoky charm.',
     longDescription:
       "Artashi Mot serves juicy skewers of pork, lamb, and quail grilled over grapevine coals. Expect generous herb plates, fire-roasted veggies, and a smoky aroma you'll carry home.",
@@ -235,6 +248,7 @@ export const places: Array<Place> = [
     name: 'Zhingyalov Hats (Teryan)',
     lat: 40.1868186,
     lng: 44.5195754,
+    address: '62 Teryan St, Yerevan 0009',
     shortDescription: 'Artsakh herb-stuffed flatbread, vegan-friendly.',
     longDescription:
       "A delicate flatbread packed with up to 20 fresh herbs, griddled to order. Fragrant, healthy, and deeply rooted in Artsakh's food traditions.",
@@ -251,6 +265,7 @@ export const places: Array<Place> = [
     name: 'In Vino',
     lat: 40.1870185,
     lng: 44.5089064,
+    address: '6 Martiros Saryan St, Yerevan 0002',
     shortDescription: 'Wine alley staple; Armenian wines & platters.',
     longDescription:
       'Cozy and lined with bottles, In Vino offers an extensive Armenian wine list and light pairings—perfect for a relaxed evening.',
@@ -267,6 +282,7 @@ export const places: Array<Place> = [
     name: 'Café Central',
     lat: 40.1849139,
     lng: 44.5206053,
+    address: '30 Abovyan St, Yerevan 0001',
     shortDescription: 'Historic café for Armenian coffee & sherbet.',
     longDescription:
       'With old-world charm and sidewalk tables, Café Central is a classic for sipping Armenian coffee brewed in a jazzve or enjoying sweet floral sherbet.',
@@ -283,6 +299,7 @@ export const places: Array<Place> = [
     name: 'Kond House',
     lat: 40.18044,
     lng: 44.5029193,
+    address: '0002, 46 Leo St, Yerevan',
     shortDescription: 'Historic neighborhood café & eatery in Kond.',
     longDescription:
       "Nestled in Yerevan's oldest district, Kond House blends history and hospitality. The cobblestone alleys outside lead to a rustic interior where traditional recipes meet modern presentation. Perfect for those who want their meal served with a side of architectural heritage.",
@@ -300,6 +317,7 @@ export const places: Array<Place> = [
     name: 'Master Class BBQ (Tumanyan)',
     lat: 40.182262,
     lng: 44.5178434,
+    address: '28, 20 Tumanyan St, Yerevan 0001',
     shortDescription: 'Famous Tumanyan Street spot for juicy kebabs.',
     longDescription:
       "Master Class BBQ is a carnivore's delight—plump, smoky kebabs grilled to perfection right on bustling Tumanyan Street. Known for consistency and generous portions, it's a favorite pre-wine-stop meal before exploring the nearby bars and cafes.",
@@ -316,6 +334,7 @@ export const places: Array<Place> = [
     name: 'Family House',
     lat: 40.1789079,
     lng: 44.5049317,
+    address: '5a Mesrop Mashtots Ave, Yerevan 0002',
     shortDescription: 'Locals love this spot for hinkali—rumored to be even better than in Georgia.',
     longDescription:
       'Family House is where Yerevan gathers to savor steaming plates of hinkali, the plump Georgian dumplings filled with juicy broth and spiced meat. Tucked near the city center, this restaurant has earned a loyal following among locals who insist its hinkali outshine even those across the border. The cozy, slightly old-school atmosphere makes it ideal for long dinners, late-night feasts, and sharing stories over generous portions of comfort food.',
