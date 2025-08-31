@@ -1,5 +1,6 @@
 import { Link, Outlet, createFileRoute } from '@tanstack/react-router'
-import { Button } from '@/shared/ui'
+import { SignInButton, UserButton } from '@clerk/tanstack-react-start'
+import { AuthLoading, Authenticated, Unauthenticated } from 'convex/react'
 
 export const Route = createFileRoute('/admin')({
   component: AdminLayout,
@@ -21,17 +22,26 @@ function AdminLayout() {
               <TabLink to="/admin/itineraries" label="Itineraries" />
             </nav>
           </div>
-          <div className="flex items-center gap-2">
-            <Link to="/admin/login">
-              <Button variant="secondary" size="sm">
-                Login
-              </Button>
-            </Link>
-          </div>
+          <Unauthenticated>
+            <SignInButton />
+          </Unauthenticated>
+          <Authenticated>
+            <UserButton />
+          </Authenticated>
         </div>
       </header>
       <main className="max-w-6xl mx-auto w-full px-4 py-6 flex-1">
-        <Outlet />
+        <Authenticated>
+          <Outlet />
+        </Authenticated>
+        <Unauthenticated>
+          <div className="flex flex-col items-center justify-center gap-4">
+            <p>Please, sign in to continue</p>
+          </div>
+        </Unauthenticated>
+        <AuthLoading>
+          <p>Still loading</p>
+        </AuthLoading>
       </main>
     </div>
   )

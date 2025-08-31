@@ -13,17 +13,12 @@ import { createServerRootRoute } from '@tanstack/react-start/server'
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as ItinerariesIdRouteImport } from './routes/itineraries/$id'
 import { Route as AdminTagsRouteImport } from './routes/admin/tags'
 import { Route as AdminPlacesRouteImport } from './routes/admin/places'
 import { Route as AdminMealTypesRouteImport } from './routes/admin/meal-types'
-import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminItinerariesRouteImport } from './routes/admin/itineraries'
-import { Route as ApiAdminAuthGithubRouteImport } from './routes/api/admin/auth/github'
 import { ServerRoute as ApiPdfServerRouteImport } from './routes/api/pdf'
-import { ServerRoute as ApiAdminLogoutServerRouteImport } from './routes/api/admin/logout'
-import { ServerRoute as ApiAdminAuthCallbackServerRouteImport } from './routes/api/admin/auth/callback'
 
 const rootServerRouteImport = createServerRootRoute()
 
@@ -36,11 +31,6 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
-} as any)
-const AdminIndexRoute = AdminIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminRouteRoute,
 } as any)
 const ItinerariesIdRoute = ItinerariesIdRouteImport.update({
   id: '/itineraries/$id',
@@ -62,73 +52,44 @@ const AdminMealTypesRoute = AdminMealTypesRouteImport.update({
   path: '/meal-types',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-const AdminLoginRoute = AdminLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
 const AdminItinerariesRoute = AdminItinerariesRouteImport.update({
   id: '/itineraries',
   path: '/itineraries',
   getParentRoute: () => AdminRouteRoute,
-} as any)
-const ApiAdminAuthGithubRoute = ApiAdminAuthGithubRouteImport.update({
-  id: '/api/admin/auth/github',
-  path: '/api/admin/auth/github',
-  getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPdfServerRoute = ApiPdfServerRouteImport.update({
   id: '/api/pdf',
   path: '/api/pdf',
   getParentRoute: () => rootServerRouteImport,
 } as any)
-const ApiAdminLogoutServerRoute = ApiAdminLogoutServerRouteImport.update({
-  id: '/api/admin/logout',
-  path: '/api/admin/logout',
-  getParentRoute: () => rootServerRouteImport,
-} as any)
-const ApiAdminAuthCallbackServerRoute =
-  ApiAdminAuthCallbackServerRouteImport.update({
-    id: '/api/admin/auth/callback',
-    path: '/api/admin/auth/callback',
-    getParentRoute: () => rootServerRouteImport,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/admin/itineraries': typeof AdminItinerariesRoute
-  '/admin/login': typeof AdminLoginRoute
   '/admin/meal-types': typeof AdminMealTypesRoute
   '/admin/places': typeof AdminPlacesRoute
   '/admin/tags': typeof AdminTagsRoute
   '/itineraries/$id': typeof ItinerariesIdRoute
-  '/admin/': typeof AdminIndexRoute
-  '/api/admin/auth/github': typeof ApiAdminAuthGithubRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/admin/itineraries': typeof AdminItinerariesRoute
-  '/admin/login': typeof AdminLoginRoute
   '/admin/meal-types': typeof AdminMealTypesRoute
   '/admin/places': typeof AdminPlacesRoute
   '/admin/tags': typeof AdminTagsRoute
   '/itineraries/$id': typeof ItinerariesIdRoute
-  '/admin': typeof AdminIndexRoute
-  '/api/admin/auth/github': typeof ApiAdminAuthGithubRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/admin/itineraries': typeof AdminItinerariesRoute
-  '/admin/login': typeof AdminLoginRoute
   '/admin/meal-types': typeof AdminMealTypesRoute
   '/admin/places': typeof AdminPlacesRoute
   '/admin/tags': typeof AdminTagsRoute
   '/itineraries/$id': typeof ItinerariesIdRoute
-  '/admin/': typeof AdminIndexRoute
-  '/api/admin/auth/github': typeof ApiAdminAuthGithubRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -136,72 +97,55 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/admin/itineraries'
-    | '/admin/login'
     | '/admin/meal-types'
     | '/admin/places'
     | '/admin/tags'
     | '/itineraries/$id'
-    | '/admin/'
-    | '/api/admin/auth/github'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
     | '/admin/itineraries'
-    | '/admin/login'
     | '/admin/meal-types'
     | '/admin/places'
     | '/admin/tags'
     | '/itineraries/$id'
-    | '/admin'
-    | '/api/admin/auth/github'
   id:
     | '__root__'
     | '/'
     | '/admin'
     | '/admin/itineraries'
-    | '/admin/login'
     | '/admin/meal-types'
     | '/admin/places'
     | '/admin/tags'
     | '/itineraries/$id'
-    | '/admin/'
-    | '/api/admin/auth/github'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
   ItinerariesIdRoute: typeof ItinerariesIdRoute
-  ApiAdminAuthGithubRoute: typeof ApiAdminAuthGithubRoute
 }
 export interface FileServerRoutesByFullPath {
   '/api/pdf': typeof ApiPdfServerRoute
-  '/api/admin/logout': typeof ApiAdminLogoutServerRoute
-  '/api/admin/auth/callback': typeof ApiAdminAuthCallbackServerRoute
 }
 export interface FileServerRoutesByTo {
   '/api/pdf': typeof ApiPdfServerRoute
-  '/api/admin/logout': typeof ApiAdminLogoutServerRoute
-  '/api/admin/auth/callback': typeof ApiAdminAuthCallbackServerRoute
 }
 export interface FileServerRoutesById {
   __root__: typeof rootServerRouteImport
   '/api/pdf': typeof ApiPdfServerRoute
-  '/api/admin/logout': typeof ApiAdminLogoutServerRoute
-  '/api/admin/auth/callback': typeof ApiAdminAuthCallbackServerRoute
 }
 export interface FileServerRouteTypes {
   fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/pdf' | '/api/admin/logout' | '/api/admin/auth/callback'
+  fullPaths: '/api/pdf'
   fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/pdf' | '/api/admin/logout' | '/api/admin/auth/callback'
-  id: '__root__' | '/api/pdf' | '/api/admin/logout' | '/api/admin/auth/callback'
+  to: '/api/pdf'
+  id: '__root__' | '/api/pdf'
   fileServerRoutesById: FileServerRoutesById
 }
 export interface RootServerRouteChildren {
   ApiPdfServerRoute: typeof ApiPdfServerRoute
-  ApiAdminLogoutServerRoute: typeof ApiAdminLogoutServerRoute
-  ApiAdminAuthCallbackServerRoute: typeof ApiAdminAuthCallbackServerRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -219,13 +163,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/admin/': {
-      id: '/admin/'
-      path: '/'
-      fullPath: '/admin/'
-      preLoaderRoute: typeof AdminIndexRouteImport
-      parentRoute: typeof AdminRouteRoute
     }
     '/itineraries/$id': {
       id: '/itineraries/$id'
@@ -255,26 +192,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminMealTypesRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/admin/login': {
-      id: '/admin/login'
-      path: '/login'
-      fullPath: '/admin/login'
-      preLoaderRoute: typeof AdminLoginRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
     '/admin/itineraries': {
       id: '/admin/itineraries'
       path: '/itineraries'
       fullPath: '/admin/itineraries'
       preLoaderRoute: typeof AdminItinerariesRouteImport
       parentRoute: typeof AdminRouteRoute
-    }
-    '/api/admin/auth/github': {
-      id: '/api/admin/auth/github'
-      path: '/api/admin/auth/github'
-      fullPath: '/api/admin/auth/github'
-      preLoaderRoute: typeof ApiAdminAuthGithubRouteImport
-      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -287,39 +210,21 @@ declare module '@tanstack/react-start/server' {
       preLoaderRoute: typeof ApiPdfServerRouteImport
       parentRoute: typeof rootServerRouteImport
     }
-    '/api/admin/logout': {
-      id: '/api/admin/logout'
-      path: '/api/admin/logout'
-      fullPath: '/api/admin/logout'
-      preLoaderRoute: typeof ApiAdminLogoutServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
-    '/api/admin/auth/callback': {
-      id: '/api/admin/auth/callback'
-      path: '/api/admin/auth/callback'
-      fullPath: '/api/admin/auth/callback'
-      preLoaderRoute: typeof ApiAdminAuthCallbackServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
   }
 }
 
 interface AdminRouteRouteChildren {
   AdminItinerariesRoute: typeof AdminItinerariesRoute
-  AdminLoginRoute: typeof AdminLoginRoute
   AdminMealTypesRoute: typeof AdminMealTypesRoute
   AdminPlacesRoute: typeof AdminPlacesRoute
   AdminTagsRoute: typeof AdminTagsRoute
-  AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminItinerariesRoute: AdminItinerariesRoute,
-  AdminLoginRoute: AdminLoginRoute,
   AdminMealTypesRoute: AdminMealTypesRoute,
   AdminPlacesRoute: AdminPlacesRoute,
   AdminTagsRoute: AdminTagsRoute,
-  AdminIndexRoute: AdminIndexRoute,
 }
 
 const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
@@ -330,15 +235,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRouteRoute: AdminRouteRouteWithChildren,
   ItinerariesIdRoute: ItinerariesIdRoute,
-  ApiAdminAuthGithubRoute: ApiAdminAuthGithubRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 const rootServerRouteChildren: RootServerRouteChildren = {
   ApiPdfServerRoute: ApiPdfServerRoute,
-  ApiAdminLogoutServerRoute: ApiAdminLogoutServerRoute,
-  ApiAdminAuthCallbackServerRoute: ApiAdminAuthCallbackServerRoute,
 }
 export const serverRouteTree = rootServerRouteImport
   ._addFileChildren(rootServerRouteChildren)
