@@ -23,12 +23,8 @@ interface MyRouterContext {
 }
 
 const fetchClerkAuth = createServerFn({ method: 'GET' }).handler(async () => {
-  const request = getWebRequest()
-  if (!request) throw new Error('No request found')
-
   const auth = await getAuth(getWebRequest())
   const token = await auth.getToken({ template: 'convex' })
-
   return {
     userId: auth.userId,
     token,
@@ -58,6 +54,7 @@ export const Route = wrapCreateRootRouteWithSentry(createRootRouteWithContext)<M
   }),
 
   beforeLoad: async (ctx) => {
+    console.log('Before load context:', ctx.context.convexQueryClient)
     const auth = await fetchClerkAuth()
     const { userId, token } = auth
     // During SSR only (the only time serverHttpClient exists),
@@ -65,7 +62,6 @@ export const Route = wrapCreateRootRouteWithSentry(createRootRouteWithContext)<M
     if (token) {
       ctx.context.convexQueryClient.serverHttpClient?.setAuth(token)
     }
-
     return {
       userId,
       token,

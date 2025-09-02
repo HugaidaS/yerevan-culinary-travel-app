@@ -59,6 +59,11 @@ export const create = mutation({
     ),
   },
   handler: async (ctx, it) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (identity === null) {
+      throw new Error('Unauthenticated call to mutation')
+    }
+
     const existing = await ctx.db
       .query('itineraries')
       .withIndex('byId', (q) => q.eq('id', it.id))
@@ -86,6 +91,11 @@ export const update = mutation({
     ),
   },
   handler: async (ctx, { id, ...updates }) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (identity === null) {
+      throw new Error('Unauthenticated call to mutation')
+    }
+
     const existing = await ctx.db
       .query('itineraries')
       .withIndex('byId', (q) => q.eq('id', id))
@@ -100,6 +110,11 @@ export const update = mutation({
 export const remove = mutation({
   args: { id: v.string() },
   handler: async (ctx, { id }) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (identity === null) {
+      throw new Error('Unauthenticated call to mutation')
+    }
+
     const existing = await ctx.db
       .query('itineraries')
       .withIndex('byId', (q) => q.eq('id', id))

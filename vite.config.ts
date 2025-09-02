@@ -5,6 +5,9 @@ import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import { wrapVinxiConfigWithSentry } from '@sentry/tanstackstart-react'
 
 const config = defineConfig({
+  ssr: {
+    noExternal: ['@clerk/tanstack-react-start'],
+  },
   plugins: [
     // this is the plugin that enables path aliases
     viteTsConfigPaths({

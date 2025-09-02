@@ -26,6 +26,11 @@ export const create = mutation({
     mealTypeIds: v.array(v.string()),
   },
   handler: async (ctx, doc) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (identity === null) {
+      throw new Error('Unauthenticated call to mutation')
+    }
+
     const existing = await ctx.db
       .query('places')
       .withIndex('byId', (q) => q.eq('id', doc.id))
@@ -53,6 +58,11 @@ export const update = mutation({
     mealTypeIds: v.optional(v.array(v.string())),
   },
   handler: async (ctx, { id, ...updates }) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (identity === null) {
+      throw new Error('Unauthenticated call to mutation')
+    }
+
     const existing = await ctx.db
       .query('places')
       .withIndex('byId', (q) => q.eq('id', id))
