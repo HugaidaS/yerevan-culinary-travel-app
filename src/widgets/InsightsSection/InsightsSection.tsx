@@ -11,7 +11,7 @@ export default function CuisineHighlights() {
       subtitle: '2000+ Years',
       description:
         "Armenian cuisine represents one of the world's oldest culinary traditions, with recipes passed down through millennia of rich cultural heritage.",
-      image: 'https://www.co-traveler.com/en/wp-content/uploads/2023/03/famous-armenian-foods-8.jpg',
+      image: '/heritage.webp',
       icon: Calendar,
       color: 'bg-armenian-red',
       textColor: 'text-armenian-red',
@@ -21,7 +21,7 @@ export default function CuisineHighlights() {
       subtitle: 'Highland Ingredients',
       description:
         "Sourced from the pristine highlands of Armenia, capturing the pure essence of Ararat's fertile valleys and mountain springs.",
-      image: 'https://theculinarytravelguide.com/wp-content/uploads/2020/01/armenian-aveluk-1067x800.jpg',
+      image: '/fresh-herbs.webp',
       icon: Mountain,
       color: 'bg-armenian-gold',
       textColor: 'text-armenian-gold',
@@ -31,7 +31,7 @@ export default function CuisineHighlights() {
       subtitle: 'Sacred Traditions',
       description:
         'From paper-thin lavash to festive gata, Armenian breads tell stories of celebration, spirituality, and daily life through time-honored techniques.',
-      image: 'https://www.willflyforfood.net/wp-content/uploads/2021/07/armenian-food-lavash.jpg',
+      image: 'armenian-food-lavash.webp',
       icon: Wheat,
       color: 'bg-armenian-brown',
       textColor: 'text-armenian-brown',
@@ -41,7 +41,7 @@ export default function CuisineHighlights() {
       subtitle: 'Khorovats Culture',
       description:
         'Master the art of Armenian barbecue, where fire becomes poetry and meat transforms into communal celebration under open skies.',
-      image: 'https://media.cntravellerme.com/photos/6548d7def6a70730b29b2fed/master/w_1600%2Cc_limit/H3YD69.jpg',
+      image: 'kebab.webp',
       icon: Utensils,
       color: 'bg-armenian-orange',
       textColor: 'text-armenian-orange',

@@ -42,7 +42,11 @@ export const Route = wrapCreateRootRouteWithSentry(createRootRouteWithContext)<M
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'TanStack Start Starter',
+        title: 'Hedonistic Yerevan Guide',
+      },
+      {
+        name: 'description',
+        content: 'Explore Yerevan from a hedonistic perspective.',
       },
     ],
     links: [

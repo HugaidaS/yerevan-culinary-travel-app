@@ -64,7 +64,13 @@ export const FeedbackForm = () => {
   return (
     <section className="text-armenian-cream">
       <div className="max-w-4xl mx-auto">
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-6"
+          data-netlify="true"
+          name="feedback-form"
+          netlify-honeypot="bot-field"
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <Label htmlFor="name" className="font-medium">
@@ -114,6 +120,8 @@ export const FeedbackForm = () => {
             />
           </div>
 
+          <div data-netlify-recaptcha="true"></div>
+
           <div className="flex justify-end">
             <Button
               type="submit"
@@ -133,6 +141,14 @@ export const FeedbackForm = () => {
               )}
             </Button>
           </div>
+
+          <input type="hidden" name="form-name" value="feedback-form" />
+
+          <p className="hidden">
+            <label>
+              Don’t fill this out if you’re human: <input name="bot-field" />
+            </label>
+          </p>
         </form>
       </div>
     </section>
