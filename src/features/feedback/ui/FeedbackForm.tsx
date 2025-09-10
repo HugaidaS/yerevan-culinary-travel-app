@@ -160,9 +160,8 @@ export const FeedbackForm = () => {
           <input type="hidden" name="form-name" value="feedback-form" />
 
           <p className="hidden">
-            <label>
-              Don’t fill this out if you’re human: <input name="bot-field" />
-            </label>
+            <label>Don’t fill this out if you’re human:</label>
+            <input name="bot-field" />
           </p>
         </form>
       </div>
