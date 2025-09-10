@@ -21,7 +21,7 @@ export const FeedbackForm = () => {
     }))
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     if (!formData.name || !formData.email || !formData.message) {
@@ -30,19 +30,34 @@ export const FeedbackForm = () => {
     }
 
     setIsSubmitting(true)
+    try {
+      const formEl = e.currentTarget
+      const fd = new FormData(formEl)
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+      // Ensure Netlify form name is present
+      if (!fd.get('form-name')) fd.append('form-name', 'feedback-form')
 
-    setIsSubmitting(false)
-    setIsSubmitted(true)
-    toast.success('Thank you for your feedback!')
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(fd as any as Record<string, string>).toString(),
+      })
 
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false)
+      setIsSubmitted(true)
+      toast.success('Thank you for your feedback!')
+
+      // Clear form fields
       setFormData({ name: '', email: '', message: '' })
-    }, 3000)
+      // Optionally reset the <form> element as well
+      formEl.reset()
+
+      // Auto-hide submitted state after a moment
+      setTimeout(() => setIsSubmitted(false), 3000)
+    } catch (error) {
+      toast.error('Something went wrong. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (isSubmitted) {
