@@ -88,7 +88,6 @@ export const FeedbackForm = () => {
           data-netlify="true"
           name="feedback-form"
           netlify-honeypot="bot-field"
-          data-netlify-recaptcha="true"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
@@ -135,8 +134,6 @@ export const FeedbackForm = () => {
               className="border-armenian-cream/20 focus:border-armenian-cream focus:ring-armenian-cream min-h-32"
             />
           </div>
-
-          <div data-netlify-recaptcha="true"></div>
 
           <div className="flex justify-end">
             <Button
