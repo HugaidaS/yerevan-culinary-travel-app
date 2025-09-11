@@ -102,3 +102,21 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     </ClerkProvider>
   )
 }
+
+//   {/* Hidden barebones Netlify form for build-time detection */}
+//   <form
+//   name="feedback-form"
+//   data-netlify="true"
+//   netlify-honeypot="bot-field"
+//   method="POST"
+//   style={{ display: 'none' }}
+// >
+//   <input type="text" name="name" />
+//   <input type="email" name="email" />
+//   <textarea name="message" />
+//   <input type="hidden" name="form-name" value="feedback-form" />
+//   <p className="hidden">
+//     <label>Don’t fill this out if you’re human:</label>
+//     <input name="bot-field" />
+//   </p>
+// </form>

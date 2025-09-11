@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Netlify Form Shadow (Detection Only)</title>
+  </head>
+  <body>
+    <!-- Hidden barebones Netlify form for build-time detection -->
+    <form
+      name="feedback-form"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      method="POST"
+      style="display:none"
+    >
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+      <input type="hidden" name="form-name" value="feedback-form" />
+      <p class="hidden">
+        <label>Don’t fill this out if you’re human:</label>
+        <input name="bot-field" />
+      </p>
+      <div data-netlify-recaptcha="true"></div>
+    </form>
+
+    <!-- This page is never meant to be visited; it only exists so Netlify
+         can detect the form during the deploy build. -->
+  </body>
+  </html>
+
+
