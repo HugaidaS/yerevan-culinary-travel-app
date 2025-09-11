@@ -89,6 +89,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <ConvexProviderWithClerk client={context.convexClient} useAuth={useAuth}>
         <html lang="en">
           <head>
+            {/* A trick to always fetch the correct favicon */}
+            <link rel="icon" href="/logo.svg" />
             <HeadContent />
             <script src="https://flackr.github.io/scroll-timeline/dist/scroll-timeline.js" async></script>
           </head>
