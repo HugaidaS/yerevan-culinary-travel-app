@@ -13,7 +13,7 @@ const FeedbackSection = () => {
           </p>
         </div>
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white/10 backdrop-blur-sm p-8 rounded-lg border border-white/20">
+          <div className="feedback-card bg-white/10 backdrop-blur-sm p-8 rounded-lg border border-white/20">
             <FeedbackForm />
           </div>
         </div>

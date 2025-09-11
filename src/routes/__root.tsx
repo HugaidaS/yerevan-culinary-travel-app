@@ -14,6 +14,7 @@ import type { ConvexReactClient } from 'convex/react'
 import type { QueryClient } from '@tanstack/react-query'
 import type { ConvexQueryClient } from '@convex-dev/react-query'
 import { TanStackQueryLayout } from '@/shared/integrations/tanstack-query'
+import { Toaster } from '@/shared/ui/sonner'
 import { ClickSpark } from '@/shared/ui'
 
 interface MyRouterContext {
@@ -96,6 +97,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             {children}
             <Scripts />
             <ClickSpark />
+            <Toaster position="top-center" richColors />
           </body>
         </html>
       </ConvexProviderWithClerk>

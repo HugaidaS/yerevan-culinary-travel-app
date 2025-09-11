@@ -1,4 +1,6 @@
-import { Bitcoin, Facebook, Instagram, Shield, Twitter, Wallet } from 'lucide-react'
+import { Shield, Wallet } from 'lucide-react'
+import { toast } from 'sonner'
+import { Link } from '@tanstack/react-router'
 import { Button } from '@/shared/ui'
 
 const Footer = () => {
@@ -15,55 +17,50 @@ const Footer = () => {
               Authentic Armenian culinary experiences that connect you with centuries of rich food culture and
               tradition.
             </p>
-            <div className="flex space-x-3">
-              <div className="w-8 h-8 bg-armenian-gold rounded-full flex items-center justify-center hover:bg-armenian-gold/80 transition-colors cursor-pointer">
-                <Facebook className="w-4 h-4 text-armenian-brown" />
-              </div>
-              <div className="w-8 h-8 bg-armenian-gold rounded-full flex items-center justify-center hover:bg-armenian-gold/80 transition-colors cursor-pointer">
-                <Instagram className="w-4 h-4 text-armenian-brown" />
-              </div>
-              <div className="w-8 h-8 bg-armenian-gold rounded-full flex items-center justify-center hover:bg-armenian-gold/80 transition-colors cursor-pointer">
-                <Twitter className="w-4 h-4 text-armenian-brown" />
-              </div>
-            </div>
           </div>
 
           {/* Itineraries */}
-          <div className="space-y-4">
+          <div className="space-y-4 text-sm">
             <h4 className="text-lg font-semibold text-armenian-gold">Itineraries</h4>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-2">
               <li>
-                <button className="text-white/80 hover:text-armenian-gold transition-colors">1-Day Quick Taste</button>
+                <Link to="/itineraries/$id" params={{ id: 'yerevan-1day' }} className="hover:text-armenian-gold">
+                  1-Day Journey
+                </Link>
               </li>
               <li>
-                <button className="text-white/80 hover:text-armenian-gold transition-colors">
-                  3-Day Cultural Experience
-                </button>
+                <Link to="/itineraries/$id" params={{ id: 'yerevan-3day' }} className="hover:text-armenian-gold">
+                  3-Day Adventure
+                </Link>
               </li>
               <li>
-                <button className="text-white/80 hover:text-armenian-gold transition-colors">
-                  7-Day Complete Journey
-                </button>
+                <Link to="/itineraries/$id" params={{ id: 'yerevan-7day' }} className="hover:text-armenian-gold">
+                  7-Day Experience
+                </Link>
               </li>
             </ul>
           </div>
 
-          {/* Crypto Support */}
+          {/* Ethereum Copy Button */}
           <div className="space-y-4">
             <h4 className="text-lg font-semibold text-armenian-gold">Support Us</h4>
-            <p className="text-white/80 text-sm mb-4">Help preserve Armenian culinary heritage with crypto donations</p>
+            <p className="text-white/80 text-sm mb-4">Help preserve Armenian culinary heritage</p>
 
             <div className="space-y-3">
               <Button
-                variant="outline"
-                size="sm"
-                className="w-full bg-transparent border-armenian-gold text-armenian-gold hover:bg-armenian-gold hover:text-armenian-brown transition-all"
-              >
-                <Bitcoin className="w-4 h-4 mr-2" />
-                Bitcoin Wallet
-              </Button>
-
-              <Button
+                onClick={async () => {
+                  const wallet = import.meta.env.VITE_ETHEREUM_WALLET
+                  if (!wallet) {
+                    toast.error('Wallet not configured')
+                    return
+                  }
+                  try {
+                    await navigator.clipboard.writeText(wallet)
+                    toast.success('Ethereum wallet copied')
+                  } catch {
+                    toast.error('Failed to copy wallet')
+                  }
+                }}
                 variant="outline"
                 size="sm"
                 className="w-full bg-transparent border-armenian-gold text-armenian-gold hover:bg-armenian-gold hover:text-armenian-brown transition-all"
@@ -81,19 +78,8 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/20 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-white/60">
+        <div className="border-t border-white/20 mt-8 pt-8 flex flex-col items-center text-sm text-white/60 text-center">
           <p>&copy; {date} Taste of Armenia. All rights reserved.</p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#" className="hover:text-armenian-gold transition-colors">
-              Privacy Policy
-            </a>
-            <a href="#" className="hover:text-armenian-gold transition-colors">
-              Terms of Service
-            </a>
-            <a href="#" className="hover:text-armenian-gold transition-colors">
-              Cookie Policy
-            </a>
-          </div>
         </div>
       </div>
     </footer>

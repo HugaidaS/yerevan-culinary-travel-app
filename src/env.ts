@@ -17,6 +17,7 @@ export const env = createEnv({
     VITE_APP_TITLE: z.string().min(1).optional(),
     VITE_GOOGLE_MAPS_API_KEY: z.string().optional(),
     VITE_CONVEX_URL: z.string().url().optional(),
+    VITE_ETHEREUM_WALLET: z.string().min(1).optional(),
   },
 
   /**
