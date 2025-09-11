@@ -40,7 +40,7 @@ export const FeedbackForm = () => {
         'bot-field': '',
       })
 
-      await fetch(window.location.pathname, {
+      await fetch('/__forms.html', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body,
