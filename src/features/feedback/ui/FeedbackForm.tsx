@@ -23,24 +23,27 @@ export const FeedbackForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
-    if (!formData.name || !formData.email || !formData.message) {
-      toast.error('Please fill in all fields')
-      return
-    }
-
     setIsSubmitting(true)
     try {
       const formEl = e.currentTarget
-      const fd = new FormData(formEl)
 
-      // Ensure Netlify form name is present
-      if (!fd.get('form-name')) fd.append('form-name', 'feedback-form')
+      const encode = (data: Record<string, string>) =>
+        Object.keys(data)
+          .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+          .join('&')
 
-      await fetch('/', {
+      const body = encode({
+        'form-name': 'feedback-form',
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        'bot-field': '',
+      })
+
+      await fetch(window.location.pathname, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(fd as any as Record<string, string>).toString(),
+        body,
       })
 
       setIsSubmitted(true)
@@ -99,7 +102,6 @@ export const FeedbackForm = () => {
                 value={formData.name}
                 onChange={handleChange}
                 className="border-armenian-cream/20 focus:border-armenian-cream focus:ring-armenian-cream"
-                required
               />
             </div>
 
@@ -115,7 +117,6 @@ export const FeedbackForm = () => {
                 value={formData.email}
                 onChange={handleChange}
                 className="border-armenian-cream/20 focus:border-armenian-cream focus:ring-armenian-cream"
-                required
               />
             </div>
           </div>
@@ -131,11 +132,8 @@ export const FeedbackForm = () => {
               value={formData.message}
               onChange={handleChange}
               className="border-armenian-cream/20 focus:border-armenian-cream focus:ring-armenian-cream min-h-32"
-              required
             />
           </div>
-
-          <div data-netlify-recaptcha="true"></div>
 
           <div className="flex justify-end">
             <Button
