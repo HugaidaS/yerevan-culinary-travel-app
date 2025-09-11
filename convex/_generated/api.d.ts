@@ -13,8 +13,6 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
-import type * as db from "../db.js";
-import type * as init from "../init.js";
 import type * as itineraries from "../itineraries.js";
 import type * as mealTypes from "../mealTypes.js";
 import type * as places from "../places.js";
@@ -29,8 +27,6 @@ import type * as tags from "../tags.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
-  db: typeof db;
-  init: typeof init;
   itineraries: typeof itineraries;
   mealTypes: typeof mealTypes;
   places: typeof places;

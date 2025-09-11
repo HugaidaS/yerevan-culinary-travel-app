@@ -76,6 +76,11 @@ export const update = mutation({
 export const remove = mutation({
   args: { id: v.string() },
   handler: async (ctx, { id }) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (identity === null) {
+      throw new Error('Unauthenticated call to mutation')
+    }
+
     const existing = await ctx.db
       .query('places')
       .withIndex('byId', (q) => q.eq('id', id))
