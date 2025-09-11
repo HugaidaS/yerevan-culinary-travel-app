@@ -11,17 +11,20 @@
       name="feedback-form"
       data-netlify="true"
       netlify-honeypot="bot-field"
+      data-netlify-recaptcha="true"
       method="POST"
       style="display:none"
     >
       <input type="text" name="name" />
       <input type="email" name="email" />
       <textarea name="message"></textarea>
+      <div data-netlify-recaptcha="true"></div>
       <input type="hidden" name="form-name" value="feedback-form" />
       <p class="hidden">
         <label>Don’t fill this out if you’re human:</label>
         <input name="bot-field" />
       </p>
+      
     </form>
 
     <!-- This page is never meant to be visited; it only exists so Netlify
