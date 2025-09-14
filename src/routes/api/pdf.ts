@@ -9,7 +9,7 @@ export const ServerRoute = createServerFileRoute('/api/pdf').methods({
 
       // Launch Puppeteer in headless mode
       const browser = await puppeteer.launch({
-        args: puppeteer.defaultArgs({ args: chromium.args, headless: 'shell' }),
+        args: puppeteer.defaultArgs({ args: chromium.args }),
         executablePath: await chromium.executablePath(),
         headless: 'shell',
       })
