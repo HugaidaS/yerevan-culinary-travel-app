@@ -1,6 +1,7 @@
 import { createServerFileRoute } from '@tanstack/react-start/server'
 import chromium from '@sparticuz/chromium'
 import puppeteer from 'puppeteer-core'
+// import puppeteer from 'puppeteer' // - this works locally
 
 export const ServerRoute = createServerFileRoute('/api/pdf').methods({
   POST: async ({ request }) => {
@@ -8,11 +9,14 @@ export const ServerRoute = createServerFileRoute('/api/pdf').methods({
       const { htmlContent } = await request.json()
 
       // Launch Puppeteer in headless mode
+
+      // const browser = await puppeteer.launch({ headless: true }) // - this works locally
       const browser = await puppeteer.launch({
         args: puppeteer.defaultArgs({ args: chromium.args }),
         executablePath: await chromium.executablePath(),
         headless: 'shell',
       })
+
       const page = await browser.newPage()
 
       // Set HTML content
