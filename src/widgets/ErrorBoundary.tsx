@@ -11,7 +11,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
     <div className="min-h-screen bg-background relative overflow-hidden">
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[url('/Cascade.jpg')] bg-no-repeat bg-cover 
+        className="absolute inset-0 bg-[url('/Cascade.webp')] bg-no-repeat bg-cover 
         bg-[position:center_40%] sm:bg-[position:center_45%] md:bg-[position:center_50%] lg:bg-center"
       />
 

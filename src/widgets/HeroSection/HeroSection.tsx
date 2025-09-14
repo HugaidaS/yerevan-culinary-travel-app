@@ -6,7 +6,7 @@ const HeroSection = () => {
   return (
     <section
       id="hero"
-      className="h-[100dvh] bg-[url('/Ararat.jpg')] bg-cover bg-center flex items-center justify-center relative"
+      className="h-[100dvh] bg-[url('/Ararat.webp')] bg-cover bg-center flex items-center justify-center relative"
     >
       <div className="absolute inset-0 bg-black/50"></div>
       <div className="container mx-auto px-4 z-10 text-center" id="hero-content">

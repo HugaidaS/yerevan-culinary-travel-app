@@ -2,7 +2,7 @@ import { FeedbackForm } from '@/features/feedback/ui'
 
 const FeedbackSection = () => {
   return (
-    <section className="py-20 bg-[url('/Bagramyan.jpg')] bg-fixed bg-cover relative">
+    <section className="py-20 bg-[url('/Bagramyan.webp')] bg-fixed bg-cover relative">
       <div className="absolute inset-0 bg-black/70"></div>
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
