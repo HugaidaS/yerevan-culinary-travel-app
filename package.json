@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "vite dev --port 3000",
     "start": "node .output/server/index.mjs",
-    "prebuild": "npx puppeteer browsers install chrome",
-    "build": "prebuild && vite build",
+    "build": "vite build",
     "serve": "vite preview",
     "test": "vitest run",
     "lint": "eslint",
