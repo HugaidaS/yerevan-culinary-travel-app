@@ -13,7 +13,6 @@ Sentry.init({
 registerGlobalMiddleware({
   middleware: [
     createMiddleware({ type: 'function' }).server(({ next }) => {
-      console.log('global server middleware running')
       return next()
     }),
     createMiddleware({ type: 'function' }).server(Sentry.sentryGlobalServerMiddlewareHandler()),

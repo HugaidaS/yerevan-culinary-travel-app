@@ -16,6 +16,8 @@ import type { ConvexQueryClient } from '@convex-dev/react-query'
 import { TanStackQueryLayout } from '@/shared/integrations/tanstack-query'
 import { Toaster } from '@/shared/ui/sonner'
 import { ClickSpark } from '@/shared/ui'
+import NotFound from '@/widgets/NotFound'
+import Error from '@/widgets/ErrorBoundary'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -71,6 +73,9 @@ export const Route = wrapCreateRootRouteWithSentry(createRootRouteWithContext)<M
       token,
     }
   },
+
+  notFoundComponent: () => <NotFound />,
+  errorComponent: ({ error, reset }) => <Error error={error} reset={reset} />,
 
   component: () => (
     <RootDocument>
