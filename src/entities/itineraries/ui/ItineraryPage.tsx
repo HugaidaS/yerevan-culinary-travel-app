@@ -136,9 +136,9 @@ export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
         key={`${meal.placeId}-${index}`}
         className="mb-6 overflow-hidden bg-card border border-border/20 hover:border-border/40 transition-all duration-300 hover:shadow-lg animate-slide-in p-0"
       >
-        <div className="flex items-stretch min-h-[200px]">
-          {/* Image on the left - full height */}
-          <div className="w-72 flex-shrink-0 overflow-hidden self-stretch">
+        <div className="flex flex-col md:flex-row items-stretch md:min-h-[200px]">
+          {/* Image on mobile top / desktop left */}
+          <div className="w-full h-48 md:w-72 md:h-auto flex-shrink-0 overflow-hidden self-stretch">
             <ImageWithFallback
               src={place.imageUrl || 'https://placehold.co/600x400/png?text=Placeholder+Image'}
               alt={place.name}
@@ -146,7 +146,7 @@ export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
             />
           </div>
 
-          {/* Content section on the right */}
+          {/* Content section */}
           <div className="flex-1 flex flex-col">
             {/* Title section */}
             <div className="p-6 pb-4">
@@ -298,21 +298,21 @@ export default function ItineraryPage({ itinerary }: ItineraryPageProps) {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="w-full px-4 md:px-6 h-16 flex items-center justify-between">
+        <div className="w-full px-4 md:px-6 min-h-16 h-auto py-2 flex flex-col gap-2 md:h-16 md:py-0 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-4">
             <Button variant="armenianOutline" size="sm" onClick={handleBack} className="print:hidden">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Button>
             <div>
-              <h1 className="text-2xl font-semibold leading-tight">{itinerary.name}</h1>
-              <p className="text-sm text-muted-foreground">
+              <h1 className="text-xl md:text-2xl font-semibold leading-tight">{itinerary.name}</h1>
+              <p className="text-xs md:text-sm text-muted-foreground">
                 {itinerary.days} Day{itinerary.days > 1 ? 's' : ''} Culinary Journey
               </p>
             </div>
           </div>
 
-          <Button variant="armenian" size="sm" onClick={handlePrint} className="print:hidden">
+          <Button variant="armenian" size="sm" onClick={handlePrint} className="w-full md:w-auto print:hidden">
             <Printer className="w-4 h-4 mr-2" />
             Save as PDF
           </Button>
